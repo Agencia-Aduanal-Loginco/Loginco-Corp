@@ -1,0 +1,192 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+{{ block.super }}
+
+{# ================================================================
+   Preview SEO en tiempo real — simula snippet de Google SERP
+   Escucha cambios en #id_meta_title y #id_meta_description.
+   Los contadores de caracteres cambian de color según umbrales.
+   No usa !important ni conflictos con Unfold.
+   ================================================================ #}
+
+<div id="seo-preview-block" style="
+    margin: 24px 0;
+    padding: 20px 24px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #f9fafb;
+    font-family: Arial, sans-serif;
+">
+    <h3 style="
+        margin: 0 0 16px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #6b7280;
+    ">Vista previa en Google</h3>
+
+    {# Snippet simulado #}
+    <div id="seo-serp-box" style="
+        max-width: 600px;
+        padding: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        background: #ffffff;
+    ">
+        {# URL breadcrumb #}
+        <div id="seo-url-line" style="
+            font-size: 13px;
+            color: #202124;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        ">loginco.com.mx &rsaquo; blog &rsaquo; <span id="seo-slug-part" style="color:#202124;">...</span></div>
+
+        {# Título clickeable (azul Google) #}
+        <div id="seo-title-line" style="
+            font-size: 20px;
+            color: #1a0dab;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        ">Sin título</div>
+
+        {# Descripción (gris Google) #}
+        <div id="seo-desc-line" style="
+            font-size: 14px;
+            color: #4d5156;
+            line-height: 1.58;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        ">Sin descripción.</div>
+    </div>
+
+    {# Contadores de caracteres #}
+    <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 24px;">
+
+        <div>
+            <span style="font-size: 12px; font-weight: 600; color: #6b7280;">Meta título</span>
+            <span id="seo-title-counter" style="
+                display: inline-block;
+                margin-left: 8px;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 12px;
+                background: #d1fae5;
+                color: #065f46;
+                min-width: 32px;
+                text-align: center;
+                transition: background 0.2s, color 0.2s;
+            ">0 / 60</span>
+        </div>
+
+        <div>
+            <span style="font-size: 12px; font-weight: 600; color: #6b7280;">Meta descripción</span>
+            <span id="seo-desc-counter" style="
+                display: inline-block;
+                margin-left: 8px;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 12px;
+                background: #d1fae5;
+                color: #065f46;
+                min-width: 42px;
+                text-align: center;
+                transition: background 0.2s, color 0.2s;
+            ">0 / 160</span>
+        </div>
+
+    </div>
+</div>
+
+<script>
+(function () {
+    "use strict";
+
+    /* ---- Referencias a elementos del DOM ---- */
+    var titleInput   = document.getElementById("id_meta_title");
+    var descInput    = document.getElementById("id_meta_description");
+    var slugInput    = document.getElementById("id_slug");
+
+    var serpTitle    = document.getElementById("seo-title-line");
+    var serpDesc     = document.getElementById("seo-desc-line");
+    var serpSlug     = document.getElementById("seo-slug-part");
+    var titleCounter = document.getElementById("seo-title-counter");
+    var descCounter  = document.getElementById("seo-desc-counter");
+
+    /* ---- Helpers de color para contadores ---- */
+    function titleCounterStyle(len) {
+        if (len <= 60)  return { bg: "#d1fae5", color: "#065f46" }; // verde
+        if (len <= 70)  return { bg: "#fef3c7", color: "#92400e" }; // naranja
+        return                 { bg: "#fee2e2", color: "#991b1b" }; // rojo
+    }
+
+    function descCounterStyle(len) {
+        if (len <= 160) return { bg: "#d1fae5", color: "#065f46" }; // verde
+        return                 { bg: "#fee2e2", color: "#991b1b" }; // rojo
+    }
+
+    function applyStyle(el, styleObj) {
+        el.style.background = styleObj.bg;
+        el.style.color      = styleObj.color;
+    }
+
+    /* ---- Actualizar preview ---- */
+    function updatePreview() {
+        var title = titleInput  ? titleInput.value.trim()  : "";
+        var desc  = descInput   ? descInput.value.trim()   : "";
+        var slug  = slugInput   ? slugInput.value.trim()   : "";
+
+        /* Título en el snippet */
+        serpTitle.textContent = title || "Sin título";
+
+        /* Descripción en el snippet */
+        serpDesc.textContent  = desc  || "Sin descripción.";
+
+        /* Slug en la línea de URL */
+        serpSlug.textContent  = slug  || "...";
+
+        /* Contadores con colores */
+        var titleLen = title.length;
+        var descLen  = desc.length;
+
+        titleCounter.textContent = titleLen + " / 60";
+        applyStyle(titleCounter, titleCounterStyle(titleLen));
+
+        descCounter.textContent  = descLen  + " / 160";
+        applyStyle(descCounter, descCounterStyle(descLen));
+    }
+
+    /* ---- Registrar listeners ---- */
+    function attachListeners() {
+        if (titleInput) {
+            titleInput.addEventListener("input", updatePreview);
+        }
+        if (descInput) {
+            descInput.addEventListener("input", updatePreview);
+        }
+        if (slugInput) {
+            slugInput.addEventListener("input", updatePreview);
+        }
+        updatePreview(); // render inicial con valores actuales
+    }
+
+    /* Ejecutar cuando el DOM esté listo */
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attachListeners);
+    } else {
+        attachListeners();
+    }
+}());
+</script>
+{% endblock %}

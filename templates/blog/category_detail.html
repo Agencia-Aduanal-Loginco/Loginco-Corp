@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} | Blog | Loginco Corp{% endblock %}
+{% block meta_description %}Publicaciones sobre {{ category.name }} para importadores y exportadores en México. Loginco Corp — Cero estrés, aduanal.{% endblock %}
+
+{% block content %}
+
+{# ── Hero de categoría ── #}
+<section class="category-hero">
+  <div class="container">
+    <p class="category-hero__label">Categoría</p>
+    <h1 class="category-hero__title">{{ category.name }}</h1>
+    {% if category.description %}
+    <p class="category-hero__description">{{ category.description }}</p>
+    {% else %}
+    <p class="category-hero__description">
+      Artículos y guías sobre {{ category.name }} para el comercio exterior en México.
+    </p>
+    {% endif %}
+  </div>
+</section>
+
+{# ── Publicaciones ── #}
+<section class="section">
+  <div class="container">
+
+    <a href="{% url 'blog:post_list' %}" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Todas las publicaciones
+    </a>
+
+    {% if posts %}
+    <div class="grid-3">
+      {% for post in posts %}
+      <article class="post-card">
+
+        <div class="post-card__image-wrap">
+          {% if post.featured_image %}
+          <picture>
+            <source srcset="{{ post.featured_image.image_md_webp.url }}" type="image/webp" />
+            <img src="{{ post.featured_image.image.url }}"
+                 alt="{{ post.featured_image.alt_text }}"
+                 loading="lazy"
+                 width="{{ post.featured_image.width }}"
+                 height="{{ post.featured_image.height }}" />
+          </picture>
+          {% else %}
+          <div class="post-card__placeholder" aria-hidden="true">
+            {{ post.title|first|upper }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="post-card__body">
+          <div class="post-card__meta">
+            <span class="badge">{{ category.name }}</span>
+            {% if post.reading_time %}
+            <span class="post-card__reading-time">{{ post.reading_time }} min</span>
+            {% endif %}
+          </div>
+
+          <h2 class="post-card__title">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </h2>
+
+          {% if post.excerpt %}
+          <p class="post-card__excerpt">{{ post.excerpt }}</p>
+          {% endif %}
+
+          <a href="{{ post.get_absolute_url }}" class="post-card__link" aria-label="Leer: {{ post.title }}">
+            Leer más
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <p style="text-align: center; color: var(--color-text-muted); padding-block: var(--spacing-16);">
+      Aún no hay publicaciones en esta categoría. ¡Próximamente!
+    </p>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

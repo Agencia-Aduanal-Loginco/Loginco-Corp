@@ -1,0 +1,217 @@
+{% load static %}{% load i18n %}<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {# ── SEO básico ── #}
+  <title>{% block title %}{% if object and object.get_effective_meta_title %}{{ object.get_effective_meta_title }} | Loginco Corp{% else %}Loginco Corp — Cero estrés, aduanal{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% if object and object.meta_description %}{{ object.meta_description }}{% else %}Agencia aduanal, bodega, patio y transporte. Loginco Corp, tu socio logístico en México.{% endif %}{% endblock %}" />
+  {% if object and object.meta_keywords %}<meta name="keywords" content="{{ object.meta_keywords }}" />{% endif %}
+  {% if object and object.no_index %}<meta name="robots" content="noindex, nofollow" />{% else %}<meta name="robots" content="index, follow" />{% endif %}
+  {% if object and object.canonical_url %}<link rel="canonical" href="{{ object.canonical_url }}" />{% endif %}
+
+  {# ── Open Graph ── #}
+  <meta property="og:site_name" content="Loginco Corp" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+  <meta property="og:title" content="{% block og_title %}{% if object and object.get_effective_og_title %}{{ object.get_effective_og_title }}{% else %}Loginco Corp{% endif %}{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}{% if object and object.get_effective_og_description %}{{ object.get_effective_og_description }}{% else %}Tu socio logístico en México.{% endif %}{% endblock %}" />
+  {% block og_image %}{% if object and object.og_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ object.og_image.image.url }}" />{% endif %}{% endblock %}
+
+  {# ── Twitter Card ── #}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{% block twitter_title %}Loginco Corp{% endblock %}" />
+  <meta name="twitter:description" content="{% block twitter_description %}Tu socio logístico en México.{% endblock %}" />
+
+  {# ── JSON-LD Schema.org ── #}
+  {% block schema_markup %}
+  {% if object and object.schema_markup %}
+  <script type="application/ld+json">{{ object.schema_markup|safe }}</script>
+  {% endif %}
+  {% endblock %}
+
+  {# ── Favicon ── #}
+  <link rel="icon" href="{% static 'img/Isotipo.png' %}" type="image/png" />
+  <link rel="shortcut icon" href="{% static 'img/Isotipo.png' %}" />
+
+  {# ── Fuente Inter ── #}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  {# ── Hoja de estilos principal ── #}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  {# ── Skip link (accesibilidad) ── #}
+  <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+
+  {# ── Header / Navegación ── #}
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="nav-inner">
+
+        {# Logo #}
+        <a href="{% url 'pages:home' %}" class="nav-logo" aria-label="Loginco Corp — inicio">
+          <img src="{% static 'img/Logotipo-Horizontal-Comercial.png' %}"
+               alt="Loginco Corp"
+               height="38"
+               loading="eager"
+               style="height:38px;width:auto;display:block;" />
+        </a>
+
+        {# Botón hamburger para mobile #}
+        <button class="nav-toggle"
+                id="nav-toggle"
+                aria-expanded="false"
+                aria-controls="nav-menu"
+                aria-label="Abrir menú de navegación">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {# Links de navegación #}
+        <nav id="nav-menu" class="nav-menu" aria-label="Navegación principal">
+          <ul>
+            <li><a href="{% url 'services:index' %}">Servicios</a></li>
+            <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+            <li><a href="{% url 'pages:about' %}">Nosotros</a></li>
+            <li>
+              <a href="{% url 'pages:contact' %}" class="btn btn-primary nav-cta">
+                Contactar
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  {# ── Contenido principal ── #}
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ── Footer ── #}
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        {# Columna: Brand #}
+        <div class="footer-brand">
+          <a href="{% url 'pages:home' %}" aria-label="Loginco Corp — inicio" style="display:inline-block;margin-bottom:var(--spacing-4);">
+            <img src="{% static 'img/Isotipo.png' %}"
+                 alt="Loginco Corp"
+                 height="52"
+                 loading="lazy"
+                 style="height:52px;width:auto;display:block;filter:brightness(0) invert(1);" />
+          </a>
+          <p>Agencia aduanal, bodega, patio y transporte de carga. Tu socio logístico en México para el comercio exterior.</p>
+        </div>
+
+        {# Columna: Links del sitio #}
+        <nav aria-label="Links del sitio">
+          <h3>Sitio</h3>
+          <ul>
+            <li><a href="{% url 'pages:home' %}">Inicio</a></li>
+            <li><a href="{% url 'services:index' %}">Servicios</a></li>
+            <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+            <li><a href="{% url 'pages:about' %}">Nosotros</a></li>
+            <li><a href="{% url 'pages:contact' %}">Contacto</a></li>
+          </ul>
+        </nav>
+
+        {# Columna: Contacto #}
+        <div class="footer-contact">
+          <h3>Contacto</h3>
+          <p>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:6px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            contacto@loginco.com.mx
+          </p>
+          <p>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:6px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.58 5a2 2 0 0 1 1.99-2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            WhatsApp disponible
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {% now "Y" %} Loginco Corp — Cero estrés, aduanal</p>
+      </div>
+    </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+
+  {# ── JS inline: scroll header + hamburger menu ── #}
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── Scroll: agrega clase "scrolled" al header ── */
+      var header = document.getElementById('site-header');
+
+      function onScroll() {
+        if (window.scrollY > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // ejecutar al cargar por si la página empieza con scroll
+
+      /* ── Hamburger: toggle menú mobile ── */
+      var toggle = document.getElementById('nav-toggle');
+      var navMenu = document.getElementById('nav-menu');
+
+      function openMenu() {
+        header.classList.add('nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Cerrar menú de navegación');
+      }
+
+      function closeMenu() {
+        header.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+      }
+
+      toggle.addEventListener('click', function () {
+        if (header.classList.contains('nav-open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      /* Cerrar menú al hacer clic en cualquier link del nav en mobile */
+      var navLinks = navMenu.querySelectorAll('a');
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth < 768) {
+            closeMenu();
+          }
+        });
+      });
+
+      /* Cerrar menú al redimensionar a desktop */
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 768) {
+          closeMenu();
+        }
+      });
+
+    }());
+  </script>
+
+</body>
+</html>

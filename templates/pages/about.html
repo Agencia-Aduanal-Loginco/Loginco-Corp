@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nosotros | Loginco Corp{% endblock %}
+{% block meta_description %}Conoce a Loginco Corp, tu socio de confianza en comercio exterior. Agencia aduanal, bodega y transporte con más de una década de experiencia en México.{% endblock %}
+
+{% block schema_markup %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Loginco Corp",
+  "description": "Agencia aduanal, bodega y transporte de carga en México",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "slogan": "Cero estrés, aduanal",
+  "areaServed": "MX",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "MX"
+  },
+  "sameAs": []
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+{# ── Page Header ── #}
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Nosotros</h1>
+    <p class="page-header__description">
+      Somos el socio logístico de confianza para empresas que operan en comercio exterior en México.
+    </p>
+  </div>
+</section>
+
+{# ── Quiénes somos ── #}
+<section class="section">
+  <div class="container">
+    <div style="max-width: 72ch; margin-inline: auto;">
+      <h2 style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-6);">
+        Una empresa, tres soluciones
+      </h2>
+      <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); line-height: 1.8; margin-bottom: var(--spacing-6);">
+        Loginco Corp nació de la necesidad real de importadores y exportadores mexicanos de contar
+        con un proveedor integral: uno que entienda la aduana, que tenga dónde guardar la mercancía
+        y que la transporte sin complicaciones.
+      </p>
+      <p style="font-size: var(--font-size-base); color: var(--color-text-muted); line-height: 1.8; margin-bottom: var(--spacing-6);">
+        Con más de una década de experiencia en el sector, hemos construido un equipo de especialistas
+        certificados en comercio exterior, con procesos claros y comunicación directa. Nuestro slogan
+        <strong style="color: var(--color-text);">"Cero estrés, aduanal"</strong> no es una promesa vacía —
+        es el resultado de cada operación que cerramos con éxito para nuestros clientes.
+      </p>
+      <p style="font-size: var(--font-size-base); color: var(--color-text-muted); line-height: 1.8;">
+        Operamos en los tres pilares del comercio exterior: agencia aduanal, almacenaje en depósito fiscal
+        y transporte de carga. Integrarlos bajo un mismo proveedor elimina la coordinación entre terceros,
+        reduce errores y acelera tus operaciones.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# ── Valores ── #}
+<section class="section section--alt" aria-labelledby="valores-titulo">
+  <div class="container">
+
+    <div class="section__header">
+      <h2 class="section__title" id="valores-titulo">Nuestros valores</h2>
+      <p class="section__subtitle">Los principios que guían cada operación que realizamos.</p>
+    </div>
+
+    <div class="grid-3">
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Confiabilidad</h3>
+        <p class="value-card__description">
+          Cumplimos lo que prometemos. Cada operación se gestiona con la misma dedicación,
+          sin importar el tamaño del embarque.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Transparencia</h3>
+        <p class="value-card__description">
+          Comunicación clara y documentación completa en cada etapa.
+          Sabes exactamente qué pasa con tu mercancía en todo momento.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 17 18 12 13 7"/>
+            <polyline points="6 17 11 12 6 7"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Agilidad</h3>
+        <p class="value-card__description">
+          Procesos optimizados y equipo especializado para despachar en los tiempos más
+          competitivos del mercado. Tu tiempo es dinero.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Cercanía</h3>
+        <p class="value-card__description">
+          Un ejecutivo dedicado a tu cuenta. Acceso directo al equipo, sin filtros ni colas
+          de atención. Respondemos en menos de 2 horas.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Tecnología</h3>
+        <p class="value-card__description">
+          Sistemas integrados de rastreo, documentación digital y reportes en tiempo real
+          para que siempre estés informado.
+        </p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="value-card__title">Cumplimiento</h3>
+        <p class="value-card__description">
+          Operamos estrictamente conforme a la legislación aduanera y fiscal mexicana.
+          Tu operación siempre en regla ante el SAT y la Aduana.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ── CTA ── #}
+<section class="cta-band" aria-labelledby="nosotros-cta-titulo">
+  <div class="container">
+    <h2 class="cta-band__title" id="nosotros-cta-titulo">¿Quieres conocernos mejor?</h2>
+    <p class="cta-band__description">
+      Platica con nuestro equipo. Te explicamos cómo podemos simplificar tu operación aduanal.
+    </p>
+    <a href="{% url 'pages:contact' %}" class="btn btn-white btn-lg">
+      Habla con nosotros
+    </a>
+  </div>
+</section>
+
+{% endblock %}

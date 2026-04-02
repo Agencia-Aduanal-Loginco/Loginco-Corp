@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Servicios de Comercio Exterior | Loginco Corp{% endblock %}
+{% block meta_description %}Agencia aduanal, bodega y patio de maniobras y transporte de carga en México. Loginco Corp — Cero estrés, aduanal.{% endblock %}
+
+{% block schema_markup %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Servicios Loginco Corp",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Agencia Aduanal",
+      "url": "https://agencia-aduanal.loginco.com.mx"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Bodega &amp; Patio",
+      "url": "https://bodega-patio.loginco.com.mx"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Transporte",
+      "url": "https://transporte.loginco.com.mx"
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+{# ── Page Header ── #}
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Nuestros Servicios</h1>
+    <p class="page-header__description">
+      Tres especialidades integradas bajo un solo socio logístico para tu operación de comercio exterior.
+    </p>
+  </div>
+</section>
+
+{# ── Servicio 1: Agencia Aduanal ── #}
+<section class="section" id="agencia-aduanal" aria-labelledby="agencia-titulo">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-12); align-items: center;">
+
+      <div>
+        <span class="hero__eyebrow">Servicio 01</span>
+        <h2 id="agencia-titulo" style="font-size: var(--font-size-3xl); margin-top: var(--spacing-4); margin-bottom: var(--spacing-6);">
+          Agencia Aduanal
+        </h2>
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-6);">
+          Gestionamos trámites de importación y exportación ante el SAT y la Aduana Mexicana.
+          Con peritos certificados y tecnología actualizada, garantizamos despachos ágiles y sin contratiempos.
+        </p>
+
+        <ul class="service-card__features" style="margin-bottom: var(--spacing-8);">
+          <li>Despacho de importación y exportación</li>
+          <li>Asesoría en clasificación arancelaria</li>
+          <li>Gestión de pedimentos ante el SAT</li>
+          <li>Trámites VUCEM y e-document</li>
+          <li>Regulaciones y restricciones no arancelarias (RRNA)</li>
+          <li>Rectificaciones y consultas de valor</li>
+        </ul>
+
+        <a href="https://agencia-aduanal.loginco.com.mx" class="btn btn-primary" rel="noopener" target="_blank">
+          Conocer más
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ── Servicio 2: Bodega & Patio ── #}
+<section class="section section--alt" id="bodega-patio" aria-labelledby="bodega-titulo">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-12); align-items: center;">
+
+      <div>
+        <span class="hero__eyebrow">Servicio 02</span>
+        <h2 id="bodega-titulo" style="font-size: var(--font-size-3xl); margin-top: var(--spacing-4); margin-bottom: var(--spacing-6);">
+          Bodega &amp; Patio de Maniobras
+        </h2>
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-6);">
+          Almacenaje seguro en depósito fiscal y patio de maniobras con control de inventario en tiempo real.
+          Manejo profesional de mercancías de importación y exportación.
+        </p>
+
+        <ul class="service-card__features" style="margin-bottom: var(--spacing-8);">
+          <li>Depósito fiscal habilitado</li>
+          <li>Control de inventario en tiempo real</li>
+          <li>Patio de maniobras con equipo certificado</li>
+          <li>Custodia de mercancías con seguro</li>
+          <li>Carga y descarga especializada</li>
+          <li>Reportes de inventario digitales</li>
+        </ul>
+
+        <a href="https://bodega-patio.loginco.com.mx" class="btn btn-primary" rel="noopener" target="_blank">
+          Conocer más
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ── Servicio 3: Transporte ── #}
+<section class="section" id="transporte" aria-labelledby="transporte-titulo">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr; gap: var(--spacing-12); align-items: center;">
+
+      <div>
+        <span class="hero__eyebrow">Servicio 03</span>
+        <h2 id="transporte-titulo" style="font-size: var(--font-size-3xl); margin-top: var(--spacing-4); margin-bottom: var(--spacing-6);">
+          Transporte de Carga
+        </h2>
+        <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); line-height: 1.7; margin-bottom: var(--spacing-6);">
+          Transporte de mercancías de comercio exterior en todo México, con operadores certificados
+          y rastreo GPS en tiempo real. Desde el puerto hasta tu almacén.
+        </p>
+
+        <ul class="service-card__features" style="margin-bottom: var(--spacing-8);">
+          <li>Transporte local y foráneo</li>
+          <li>Rastreo GPS en tiempo real</li>
+          <li>Operadores certificados para carga especial</li>
+          <li>Transporte refrigerado y controlado</li>
+          <li>Coordinación puerta a puerta</li>
+          <li>Documentación completa para cada viaje</li>
+        </ul>
+
+        <a href="https://transporte.loginco.com.mx" class="btn btn-primary" rel="noopener" target="_blank">
+          Conocer más
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ── CTA ── #}
+<section class="cta-band" aria-labelledby="servicios-cta-titulo">
+  <div class="container">
+    <h2 class="cta-band__title" id="servicios-cta-titulo">¿Necesitas más de un servicio?</h2>
+    <p class="cta-band__description">
+      Combinamos agencia aduanal, bodega y transporte en una sola operación coordinada.
+      Sin intermediarios. Sin duplicación de costos.
+    </p>
+    <a href="{% url 'pages:contact' %}" class="btn btn-white btn-lg">
+      Solicitar cotización
+    </a>
+  </div>
+</section>
+
+{% endblock %}

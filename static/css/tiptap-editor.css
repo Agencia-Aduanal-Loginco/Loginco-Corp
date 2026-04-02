@@ -1,0 +1,265 @@
+/* =========================================================
+   TipTap Editor — estilos para el admin de Django + Unfold
+   Convenciones: BEM ligero, sin !important, sin conflictos
+   con las utilidades de Unfold (prefijo .tiptap-*)
+   ========================================================= */
+
+/* Variables locales del editor — sobreescribibles desde fuera */
+:root {
+  --tiptap-border: #d1d5db;
+  --tiptap-bg: #ffffff;
+  --tiptap-toolbar-bg: #f9fafb;
+  --tiptap-toolbar-btn-hover: #e5e7eb;
+  --tiptap-toolbar-btn-active: #0ea5e9;
+  --tiptap-toolbar-btn-active-text: #ffffff;
+  --tiptap-text: #111827;
+  --tiptap-placeholder: #9ca3af;
+  --tiptap-link: #0284c7;
+  --tiptap-code-bg: #f3f4f6;
+  --tiptap-blockquote-border: #0ea5e9;
+  --tiptap-blockquote-bg: #f0f9ff;
+  --tiptap-table-border: #d1d5db;
+  --tiptap-table-header-bg: #f3f4f6;
+  --tiptap-radius: 6px;
+  --tiptap-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Tema oscuro — Unfold usa clase .dark en <html> */
+.dark {
+  --tiptap-border: #374151;
+  --tiptap-bg: #1f2937;
+  --tiptap-toolbar-bg: #111827;
+  --tiptap-toolbar-btn-hover: #374151;
+  --tiptap-toolbar-btn-active: #0ea5e9;
+  --tiptap-toolbar-btn-active-text: #ffffff;
+  --tiptap-text: #f9fafb;
+  --tiptap-placeholder: #6b7280;
+  --tiptap-link: #38bdf8;
+  --tiptap-code-bg: #1f2937;
+  --tiptap-blockquote-border: #0ea5e9;
+  --tiptap-blockquote-bg: #082f49;
+  --tiptap-table-border: #374151;
+  --tiptap-table-header-bg: #111827;
+}
+
+/* ---------------------------------------------------------
+   Contenedor externo
+   --------------------------------------------------------- */
+.tiptap-wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--tiptap-border);
+  border-radius: var(--tiptap-radius);
+  overflow: hidden;
+  background: var(--tiptap-bg);
+  font-family: var(--tiptap-font);
+  margin-block: 4px;
+}
+
+/* ---------------------------------------------------------
+   Toolbar
+   --------------------------------------------------------- */
+.tiptap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--tiptap-toolbar-bg);
+  border-bottom: 1px solid var(--tiptap-border);
+}
+
+.tiptap-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--tiptap-text);
+  font-family: var(--tiptap-font);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.tiptap-toolbar button:hover {
+  background: var(--tiptap-toolbar-btn-hover);
+  border-color: var(--tiptap-border);
+}
+
+.tiptap-toolbar button.is-active {
+  background: var(--tiptap-toolbar-btn-active);
+  border-color: var(--tiptap-toolbar-btn-active);
+  color: var(--tiptap-toolbar-btn-active-text);
+}
+
+.tiptap-toolbar button:focus-visible {
+  outline: 2px solid var(--tiptap-toolbar-btn-active);
+  outline-offset: 1px;
+}
+
+.tiptap-toolbar__separator {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background: var(--tiptap-border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------
+   Área de edición (ProseMirror)
+   --------------------------------------------------------- */
+.tiptap-editor {
+  min-height: 400px;
+  padding: 16px 20px;
+  background: var(--tiptap-bg);
+  color: var(--tiptap-text);
+  font-family: var(--tiptap-font);
+  font-size: 15px;
+  line-height: 1.7;
+  outline: none;
+  overflow-y: auto;
+}
+
+/* ProseMirror monta dentro del div — asegurar que tome todo el espacio */
+.tiptap-editor .ProseMirror {
+  outline: none;
+  min-height: 360px;
+}
+
+/* Placeholder vacío */
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--tiptap-placeholder);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* ---------------------------------------------------------
+   Tipografía del contenido
+   --------------------------------------------------------- */
+.tiptap-editor h2,
+.tiptap-editor h3,
+.tiptap-editor h4 {
+  color: var(--tiptap-text);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap-editor h2 { font-size: 1.5rem; }
+.tiptap-editor h3 { font-size: 1.25rem; }
+.tiptap-editor h4 { font-size: 1.1rem; }
+
+.tiptap-editor p {
+  margin-top: 0;
+  margin-bottom: 0.75em;
+}
+
+.tiptap-editor a {
+  color: var(--tiptap-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tiptap-editor a:hover {
+  text-decoration: none;
+}
+
+.tiptap-editor ul,
+.tiptap-editor ol {
+  padding-left: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.tiptap-editor li {
+  margin-bottom: 0.25em;
+}
+
+.tiptap-editor blockquote {
+  margin: 1em 0;
+  padding: 12px 16px;
+  border-left: 4px solid var(--tiptap-blockquote-border);
+  background: var(--tiptap-blockquote-bg);
+  border-radius: 0 var(--tiptap-radius) var(--tiptap-radius) 0;
+  font-style: italic;
+  color: var(--tiptap-text);
+}
+
+.tiptap-editor code {
+  font-family: "Fira Code", "Cascadia Code", Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--tiptap-code-bg);
+  border-radius: 3px;
+  padding: 2px 5px;
+}
+
+.tiptap-editor pre {
+  background: var(--tiptap-code-bg);
+  border-radius: var(--tiptap-radius);
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 0.75em;
+}
+
+.tiptap-editor pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------
+   Tablas
+   --------------------------------------------------------- */
+.tiptap-editor table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+  overflow: hidden;
+}
+
+.tiptap-editor th,
+.tiptap-editor td {
+  border: 1px solid var(--tiptap-table-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tiptap-editor th {
+  background: var(--tiptap-table-header-bg);
+  font-weight: 600;
+}
+
+.tiptap-editor tr:hover td {
+  background: rgba(0 0 0 / 0.02);
+}
+
+/* Selección de celda en TipTap */
+.tiptap-editor .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 165, 233, 0.15);
+  pointer-events: none;
+}
+
+.tiptap-editor th,
+.tiptap-editor td {
+  position: relative;
+}
+
+/* ---------------------------------------------------------
+   Selección de texto
+   --------------------------------------------------------- */
+.tiptap-editor .ProseMirror ::selection {
+  background: rgba(14, 165, 233, 0.25);
+}

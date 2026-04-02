@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog | Loginco Corp{% endblock %}
+{% block meta_description %}Guías, noticias y recursos sobre comercio exterior en México. Agencia aduanal, bodega y transporte de carga.{% endblock %}
+
+{% block schema_markup %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog Loginco Corp",
+  "description": "Guías y recursos sobre comercio exterior en México",
+  "url": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-header__title">Blog</h1>
+    <p class="page-header__description">
+      Guías, noticias y recursos para importadores y exportadores mexicanos.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    {% if posts %}
+    <div class="grid-3">
+      {% for post in posts %}
+      <article class="post-card">
+
+        <div class="post-card__image-wrap">
+          {% if post.featured_image %}
+          <picture>
+            <source srcset="{{ post.featured_image.image_md_webp.url }}" type="image/webp" />
+            <img src="{{ post.featured_image.image.url }}"
+                 alt="{{ post.featured_image.alt_text }}"
+                 loading="lazy"
+                 width="{{ post.featured_image.width }}"
+                 height="{{ post.featured_image.height }}" />
+          </picture>
+          {% else %}
+          <div class="post-card__placeholder" aria-hidden="true">
+            {{ post.title|first|upper }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="post-card__body">
+          <div class="post-card__meta">
+            {% if post.category %}
+            <a href="{{ post.category.get_absolute_url }}" class="badge">{{ post.category.name }}</a>
+            {% endif %}
+            {% if post.reading_time %}
+            <span class="post-card__reading-time">{{ post.reading_time }} min</span>
+            {% endif %}
+          </div>
+
+          <h2 class="post-card__title">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </h2>
+
+          {% if post.excerpt %}
+          <p class="post-card__excerpt">{{ post.excerpt }}</p>
+          {% endif %}
+
+          <a href="{{ post.get_absolute_url }}" class="post-card__link" aria-label="Leer: {{ post.title }}">
+            Leer más
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <nav class="pagination" aria-label="Paginación del blog">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link" aria-label="Página anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </a>
+      {% endif %}
+
+      {% for num in paginator.page_range %}
+        {% if page_obj.number == num %}
+        <span class="pagination__current" aria-current="page">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}" class="pagination__link">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="pagination__link" aria-label="Página siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+    {% else %}
+    <p style="text-align: center; color: var(--color-text-muted); padding-block: var(--spacing-16);">
+      Próximamente publicaremos contenido sobre comercio exterior.
+    </p>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

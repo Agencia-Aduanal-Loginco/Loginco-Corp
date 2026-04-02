@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Loginco Corp — Cero estrés, aduanal{% endblock %}
+
+{% block content %}
+
+<section class="hero" aria-label="Inicio">
+  <div class="container">
+    <div class="hero__inner">
+
+      <div class="hero__content">
+        <span class="hero__eyebrow">Agencia Aduanal · Bodega · Transporte</span>
+
+        <h1 class="hero__title">
+          Cero estrés,<br />
+          <em>aduanal.</em>
+        </h1>
+
+        <p class="hero__description">
+          Loginco Corp unifica los tres servicios que necesita tu empresa para operar
+          en comercio exterior sin complicaciones.
+        </p>
+
+        <div class="hero__actions">
+          <a href="{% url 'pages:contact' %}" class="btn btn-accent btn-lg">
+            Habla con un asesor
+          </a>
+          <a href="{% url 'services:index' %}" class="btn btn-outline btn-lg" style="color: var(--color-white); border-color: rgba(255,255,255,0.4);">
+            Ver servicios
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__graphic">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="30" y="80" width="140" height="80" rx="6" fill="rgba(52,52,176,0.3)" stroke="rgba(52,52,176,0.6)" stroke-width="2"/>
+            <circle cx="60" cy="163" r="14" fill="rgba(52,52,176,0.4)" stroke="rgba(52,52,176,0.7)" stroke-width="2"/>
+            <circle cx="140" cy="163" r="14" fill="rgba(52,52,176,0.4)" stroke="rgba(52,52,176,0.7)" stroke-width="2"/>
+            <path d="M170 130 L170 100 L195 100 L195 130 Z" fill="rgba(52,52,176,0.2)" stroke="rgba(52,52,176,0.5)" stroke-width="2"/>
+            <line x1="100" y1="80" x2="100" y2="160" stroke="rgba(52,52,176,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="30" y1="120" x2="170" y2="120" stroke="rgba(52,52,176,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="100" cy="45" r="20" fill="rgba(249,115,22,0.2)" stroke="rgba(249,115,22,0.5)" stroke-width="2"/>
+            <text x="100" y="52" text-anchor="middle" fill="rgba(249,115,22,0.8)" font-size="18" font-weight="bold">&#10003;</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="servicios-titulo">
+  <div class="container">
+
+    <div class="section__header">
+      <h2 class="section__title" id="servicios-titulo">Nuestros Servicios</h2>
+      <p class="section__subtitle">
+        Tres especialidades, un solo proveedor de confianza para tu operación de comercio exterior.
+      </p>
+    </div>
+
+    <div class="grid-3">
+
+      <article class="service-card">
+        <div class="service-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Agencia Aduanal</h3>
+        <p class="service-card__description">
+          Gestión integral de trámites ante el SAT y la Aduana Mexicana.
+          Despacho ágil de importación y exportación con peritos certificados.
+        </p>
+        <a href="https://agencia-aduanal.loginco.com.mx" class="btn btn-outline" rel="noopener">
+          Saber más
+        </a>
+      </article>
+
+      <article class="service-card">
+        <div class="service-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Bodega &amp; Patio</h3>
+        <p class="service-card__description">
+          Almacenaje en depósito fiscal y patio de maniobras con control de inventario
+          en tiempo real y custodia certificada.
+        </p>
+        <a href="https://bodega-patio.loginco.com.mx" class="btn btn-outline" rel="noopener">
+          Saber más
+        </a>
+      </article>
+
+      <article class="service-card">
+        <div class="service-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h5l3 3v6h-8V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h3 class="service-card__title">Transporte</h3>
+        <p class="service-card__description">
+          Transporte de carga local y foráneo para mercancías de comercio exterior,
+          con rastreo en tiempo real y operadores certificados.
+        </p>
+        <a href="https://transporte.loginco.com.mx" class="btn btn-outline" rel="noopener">
+          Saber más
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="porque-titulo">
+  <div class="container">
+
+    <div class="section__header">
+      <h2 class="section__title" id="porque-titulo">¿Por qué elegir Loginco?</h2>
+      <p class="section__subtitle">
+        Más de una década de experiencia en comercio exterior respaldan cada operación.
+      </p>
+    </div>
+
+    <div class="grid-4">
+
+      <div class="diff-item">
+        <div class="diff-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="diff-item__title">Experiencia comprobada</h3>
+        <p class="diff-item__description">
+          Años de operaciones aduanales exitosas respaldan nuestra trayectoria en el comercio exterior mexicano.
+        </p>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3 class="diff-item__title">Un solo proveedor</h3>
+        <p class="diff-item__description">
+          Agencia aduanal, bodega y transporte bajo un mismo techo. Menos coordinación, menos errores, más eficiencia.
+        </p>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3 class="diff-item__title">Tecnología y transparencia</h3>
+        <p class="diff-item__description">
+          Rastreo en tiempo real, documentación digital y comunicación constante en cada etapa de tu operación.
+        </p>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="diff-item__title">Atención personalizada</h3>
+        <p class="diff-item__description">
+          Un ejecutivo dedicado a tu cuenta. Respuesta en menos de 2 horas y acompañamiento en todo el proceso.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% if recent_posts %}
+<section class="section" aria-labelledby="blog-titulo">
+  <div class="container">
+
+    <div class="section__header">
+      <h2 class="section__title" id="blog-titulo">Publicaciones recientes</h2>
+      <p class="section__subtitle">
+        Noticias, guías y novedades sobre comercio exterior en México.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      {% for post in recent_posts %}
+      <article class="post-card">
+
+        <div class="post-card__image-wrap">
+          {% if post.featured_image %}
+          <picture>
+            <source srcset="{{ post.featured_image.image_md_webp.url }}" type="image/webp" />
+            <img src="{{ post.featured_image.image.url }}"
+                 alt="{{ post.featured_image.alt_text }}"
+                 loading="lazy"
+                 width="{{ post.featured_image.width }}"
+                 height="{{ post.featured_image.height }}" />
+          </picture>
+          {% else %}
+          <div class="post-card__placeholder" aria-hidden="true">
+            {{ post.title|first|upper }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="post-card__body">
+          <div class="post-card__meta">
+            {% if post.category %}
+            <a href="{{ post.category.get_absolute_url }}" class="badge">
+              {{ post.category.name }}
+            </a>
+            {% endif %}
+            {% if post.reading_time %}
+            <span class="post-card__reading-time" aria-label="{{ post.reading_time }} minutos de lectura">
+              {{ post.reading_time }} min
+            </span>
+            {% endif %}
+          </div>
+
+          <h3 class="post-card__title">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </h3>
+
+          {% if post.excerpt %}
+          <p class="post-card__excerpt">{{ post.excerpt }}</p>
+          {% endif %}
+
+          <a href="{{ post.get_absolute_url }}" class="post-card__link" aria-label="Leer: {{ post.title }}">
+            Leer más
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+      </article>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: var(--spacing-10);">
+      <a href="{% url 'blog:post_list' %}" class="btn btn-outline">
+        Ver todas las publicaciones
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+{% endif %}
+
+<section class="cta-band" aria-labelledby="cta-titulo">
+  <div class="container">
+    <h2 class="cta-band__title" id="cta-titulo">¿Listo para operar sin complicaciones?</h2>
+    <p class="cta-band__description">
+      Cotiza sin compromiso. Nuestro equipo responde en menos de 2 horas.
+    </p>
+    <a href="{% url 'pages:contact' %}" class="btn btn-white btn-lg">
+      Contáctanos ahora
+    </a>
+  </div>
+</section>
+
+{% endblock %}

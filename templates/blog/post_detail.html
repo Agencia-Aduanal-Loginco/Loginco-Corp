@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.get_effective_meta_title }} | Loginco Corp{% endblock %}
+{% block meta_description %}{{ post.meta_description }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.get_effective_og_title }}{% endblock %}
+{% block og_description %}{{ post.get_effective_og_description }}{% endblock %}
+{% block og_image %}
+{% if post.featured_image %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.image.url }}" />
+{% endif %}
+{% endblock %}
+{% block twitter_title %}{{ post.get_effective_og_title }}{% endblock %}
+{% block twitter_description %}{{ post.get_effective_og_description }}{% endblock %}
+
+{% block schema_markup %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.meta_description|escapejs }}",
+  "datePublished": "{{ post.published_at|date:'c' }}",
+  "dateModified": "{{ post.updated_at|date:'c' }}",
+  {% if post.featured_image %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.image.url }}",{% endif %}
+  "author": {
+    "@type": "Organization",
+    "name": "Loginco Corp",
+    "url": "{{ request.scheme }}://{{ request.get_host }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Loginco Corp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+{# ── HERO del artículo ── #}
+<section class="article-hero">
+  <div class="container">
+
+    {# Breadcrumb #}
+    <nav class="article-breadcrumb" aria-label="Ruta de navegación">
+      <a href="{% url 'pages:home' %}">Inicio</a>
+      <span class="article-breadcrumb__sep" aria-hidden="true">/</span>
+      <a href="{% url 'blog:post_list' %}">Blog</a>
+      {% if post.category %}
+      <span class="article-breadcrumb__sep" aria-hidden="true">/</span>
+      <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
+      {% endif %}
+      <span class="article-breadcrumb__sep" aria-hidden="true">/</span>
+      <span aria-current="page">{{ post.title|truncatechars:40 }}</span>
+    </nav>
+
+    {# Imagen destacada #}
+    {% if post.featured_image %}
+    <div class="article-hero__image">
+      <picture>
+        <source srcset="{{ post.featured_image.image_lg_webp.url }}" type="image/webp" />
+        <img src="{{ post.featured_image.image.url }}"
+             alt="{{ post.featured_image.alt_text }}"
+             fetchpriority="high"
+             width="{{ post.featured_image.width }}"
+             height="{{ post.featured_image.height }}" />
+      </picture>
+    </div>
+    {% endif %}
+
+    {# Título y metadata #}
+    <h1 class="article-header__title">{{ post.title }}</h1>
+
+    <div class="article-header__meta">
+      {% if post.category %}
+      <a href="{{ post.category.get_absolute_url }}" class="badge">{{ post.category.name }}</a>
+      {% endif %}
+
+      {% if post.published_at %}
+      <time datetime="{{ post.published_at|date:'Y-m-d' }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        {{ post.published_at|date:"j \d\e F, Y" }}
+      </time>
+      {% endif %}
+
+      {% if post.reading_time %}
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        {{ post.reading_time }} min de lectura
+      </span>
+      {% endif %}
+
+    </div>
+
+  </div>
+</section>
+
+{# ── Cuerpo del artículo ── #}
+<div class="article-layout">
+  <div class="container">
+    <div class="article-body">
+
+      {% if post.excerpt %}
+      <p style="font-size: var(--font-size-lg); color: var(--color-text-muted); margin-bottom: var(--spacing-8); line-height: 1.7; font-weight: 500;">
+        {{ post.excerpt }}
+      </p>
+      {% endif %}
+
+      {{ post.body|safe }}
+
+      {# Video embed ── si hay URL de video #}
+      {% if post.video_url %}
+      <div class="video-embed">
+        <iframe src="{{ post.video_url }}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                title="Video: {{ post.title }}"></iframe>
+      </div>
+      {% endif %}
+
+      {# Tags y sitios destino #}
+      {% if post.tags.all or post.site_targets.all %}
+      <div style="margin-top: var(--spacing-12); padding-top: var(--spacing-8); border-top: 1px solid var(--color-border); display: flex; flex-wrap: wrap; gap: var(--spacing-2); align-items: center;">
+        {% if post.tags.all %}
+        <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-muted);">Etiquetas:</span>
+        {% for tag in post.tags.all %}
+        <span class="badge">{{ tag.name }}</span>
+        {% endfor %}
+        {% endif %}
+        {% if post.site_targets.all %}
+        <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-muted); margin-left: {% if post.tags.all %}var(--spacing-4){% else %}0{% endif %};">Publicado en:</span>
+        {% for site in post.site_targets.all %}
+        <a href="{{ site.domain }}" target="_blank" rel="noopener"
+           class="badge"
+           style="background: var(--color-primary-light); color: var(--color-primary-dark); text-decoration: none;">
+          {{ site.name }}
+        </a>
+        {% endfor %}
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {# Navegación de regreso #}
+      <div style="margin-top: var(--spacing-12); padding-top: var(--spacing-8); border-top: 1px solid var(--color-border);">
+        <a href="{% url 'blog:post_list' %}" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Volver al blog
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{# ── CTA ── #}
+<section class="cta-band" aria-labelledby="post-cta-titulo">
+  <div class="container">
+    <h2 class="cta-band__title" id="post-cta-titulo">¿Tienes dudas sobre comercio exterior?</h2>
+    <p class="cta-band__description">
+      Nuestro equipo está listo para orientarte. Respuesta en menos de 2 horas.
+    </p>
+    <a href="{% url 'pages:contact' %}" class="btn btn-white btn-lg">
+      Contactar a un asesor
+    </a>
+  </div>
+</section>
+
+{% endblock %}
