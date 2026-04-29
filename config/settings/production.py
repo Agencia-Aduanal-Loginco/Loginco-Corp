@@ -39,4 +39,22 @@ CACHES = {
 # Imagekit: estrategia optimista para producción
 IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = "imagekit.cachefiles.strategies.Optimistic"
 
+# DigitalOcean Spaces (S3-compatible) para media en producción
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+AWS_DEFAULT_ACL = "public-read"
+AWS_QUERYSTRING_AUTH = False
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 META_SITE_PROTOCOL = "https"
