@@ -33,20 +33,87 @@
       </div>
 
       <div class="hero__visual" aria-hidden="true">
-        <div class="hero__graphic">
-          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="30" y="80" width="140" height="80" rx="6" fill="rgba(52,52,176,0.3)" stroke="rgba(52,52,176,0.6)" stroke-width="2"/>
-            <circle cx="60" cy="163" r="14" fill="rgba(52,52,176,0.4)" stroke="rgba(52,52,176,0.7)" stroke-width="2"/>
-            <circle cx="140" cy="163" r="14" fill="rgba(52,52,176,0.4)" stroke="rgba(52,52,176,0.7)" stroke-width="2"/>
-            <path d="M170 130 L170 100 L195 100 L195 130 Z" fill="rgba(52,52,176,0.2)" stroke="rgba(52,52,176,0.5)" stroke-width="2"/>
-            <line x1="100" y1="80" x2="100" y2="160" stroke="rgba(52,52,176,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="30" y1="120" x2="170" y2="120" stroke="rgba(52,52,176,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
-            <circle cx="100" cy="45" r="20" fill="rgba(249,115,22,0.2)" stroke="rgba(249,115,22,0.5)" stroke-width="2"/>
-            <text x="100" y="52" text-anchor="middle" fill="rgba(249,115,22,0.8)" font-size="18" font-weight="bold">&#10003;</text>
-          </svg>
+
+        <!-- Card 1: Operaciones activas -->
+        <div class="hero-card hero-card--ops">
+          <div class="hero-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <div class="hero-card__body">
+            <span class="hero-card__number">+1,200</span>
+            <span class="hero-card__label">Operaciones completadas</span>
+          </div>
         </div>
+
+        <!-- Card 2: Tiempo de respuesta (destacada) -->
+        <div class="hero-card hero-card--response hero-card--featured">
+          <div class="hero-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="hero-card__body">
+            <span class="hero-card__number">&lt; 2 hrs</span>
+            <span class="hero-card__label">Tiempo de respuesta</span>
+          </div>
+          <span class="hero-card__badge">Garantizado</span>
+        </div>
+
+        <!-- Card 3: Satisfacción -->
+        <div class="hero-card hero-card--satisfaction">
+          <div class="hero-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div class="hero-card__body">
+            <span class="hero-card__number">98%</span>
+            <span class="hero-card__label">Clientes satisfechos</span>
+          </div>
+          <div class="hero-card__progress" aria-hidden="true">
+            <div class="hero-card__progress-bar" style="width: 98%"></div>
+          </div>
+        </div>
+
       </div>
 
+    </div>
+  </div>
+
+  <!-- Wave separator -->
+  <div class="hero__wave" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,32 C360,80 720,0 1440,48 L1440,80 L0,80 Z" fill="white"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Banda de estadísticas -->
+<section class="stats-strip" aria-label="Estadísticas de Loginco Corp">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">+10</span>
+        <span class="stat-label">Años de experiencia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">+1,200</span>
+        <span class="stat-label">Operaciones aduanales</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Servicios integrados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">&lt; 2 hrs</span>
+        <span class="stat-label">Tiempo de respuesta</span>
+      </div>
     </div>
   </div>
 </section>
@@ -54,7 +121,7 @@
 <section class="section" aria-labelledby="servicios-titulo">
   <div class="container">
 
-    <div class="section__header">
+    <div class="section__header animate-on-scroll">
       <h2 class="section__title" id="servicios-titulo">Nuestros Servicios</h2>
       <p class="section__subtitle">
         Tres especialidades, un solo proveedor de confianza para tu operación de comercio exterior.
@@ -63,7 +130,7 @@
 
     <div class="grid-3">
 
-      <article class="service-card">
+      <article class="service-card animate-on-scroll delay-1">
         <div class="service-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -80,7 +147,7 @@
         </a>
       </article>
 
-      <article class="service-card">
+      <article class="service-card animate-on-scroll delay-2">
         <div class="service-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
@@ -97,7 +164,7 @@
         </a>
       </article>
 
-      <article class="service-card">
+      <article class="service-card animate-on-scroll delay-3">
         <div class="service-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="1" y="3" width="15" height="13" rx="1"/>
@@ -123,7 +190,7 @@
 <section class="section section--alt" aria-labelledby="porque-titulo">
   <div class="container">
 
-    <div class="section__header">
+    <div class="section__header animate-on-scroll">
       <h2 class="section__title" id="porque-titulo">¿Por qué elegir Loginco?</h2>
       <p class="section__subtitle">
         Más de una década de experiencia en comercio exterior respaldan cada operación.
@@ -132,7 +199,7 @@
 
     <div class="grid-4">
 
-      <div class="diff-item">
+      <div class="diff-item animate-on-scroll delay-1">
         <div class="diff-item__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -145,7 +212,7 @@
         </p>
       </div>
 
-      <div class="diff-item">
+      <div class="diff-item animate-on-scroll delay-2">
         <div class="diff-item__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -159,7 +226,7 @@
         </p>
       </div>
 
-      <div class="diff-item">
+      <div class="diff-item animate-on-scroll delay-3">
         <div class="diff-item__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -173,7 +240,7 @@
         </p>
       </div>
 
-      <div class="diff-item">
+      <div class="diff-item animate-on-scroll delay-4">
         <div class="diff-item__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -196,7 +263,7 @@
 <section class="section" aria-labelledby="blog-titulo">
   <div class="container">
 
-    <div class="section__header">
+    <div class="section__header animate-on-scroll">
       <h2 class="section__title" id="blog-titulo">Publicaciones recientes</h2>
       <p class="section__subtitle">
         Noticias, guías y novedades sobre comercio exterior en México.
@@ -205,7 +272,7 @@
 
     <div class="grid-3">
       {% for post in recent_posts %}
-      <article class="post-card">
+      <article class="post-card animate-on-scroll delay-{{ forloop.counter }}">
 
         <div class="post-card__image-wrap">
           {% if post.featured_image %}

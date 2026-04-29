@@ -254,6 +254,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-white);
 }
 
+.btn-success {
+  background-color: #059669;
+  color: var(--color-white);
+  border-color: #059669;
+}
+
+.btn-success:hover {
+  background-color: #047857;
+  border-color: #047857;
+  color: var(--color-white);
+}
+
 .btn-white {
   background-color: var(--color-white);
   color: var(--color-primary-dark);
@@ -523,17 +535,23 @@ h1, h2, h3, h4, h5, h6 {
 .hero {
   background: linear-gradient(135deg, #0d0d3c 0%, #1b1b7a 50%, #3434b0 100%);
   color: var(--color-white);
-  padding-block: clamp(4rem, 12vw, 8rem);
+  padding-block-start: clamp(4rem, 12vw, 8rem);
+  padding-block-end: clamp(6rem, 14vw, 10rem);
   overflow: hidden;
   position: relative;
 }
 
+/* Capa 1: brillo radial central */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(52, 52, 176, 0.25) 0%, transparent 60%);
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(52, 52, 176, 0.25) 0%, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: auto, 28px 28px;
   pointer-events: none;
+  z-index: 0;
 }
 
 .hero__inner {
@@ -555,14 +573,14 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: var(--color-primary);
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: var(--spacing-4);
-  background-color: rgba(14, 165, 233, 0.12);
+  background-color: rgba(255, 255, 255, 0.1);
   padding: var(--spacing-2) var(--spacing-4);
   border-radius: 999px;
-  border: 1px solid rgba(14, 165, 233, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .hero__title {
@@ -575,7 +593,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero__title em {
   font-style: normal;
-  color: var(--color-primary);
+  color: #93c5fd;  /* azul cielo claro — contrasta sobre el fondo oscuro */
 }
 
 .hero__description {
@@ -593,30 +611,198 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
 }
 
-/* Ilustración hero */
+/* ── Hero visual: composición de cards glassmorphism ── */
 .hero__visual {
+  position: relative;
+  min-height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hero__graphic {
+/* En mobile las cards se apilan en columna */
+@media (max-width: 767px) {
+  .hero__visual {
+    display: none; /* Ocultar en mobile para no saturar el layout */
+  }
+}
+
+/* ── Wave separator ── */
+.hero__wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  max-width: 420px;
-  aspect-ratio: 1;
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(2, 132, 199, 0.1) 100%);
-  border-radius: var(--radius-xl);
-  border: 1px solid rgba(14, 165, 233, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-inline: auto;
+  line-height: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.hero__graphic svg {
-  width: 60%;
-  height: 60%;
-  opacity: 0.6;
+.hero__wave svg {
+  display: block;
+  width: 100%;
+  height: clamp(40px, 5vw, 70px);
+}
+
+/* ── Cards glassmorphism base ── */
+.hero-card {
+  position: absolute;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: var(--spacing-4) var(--spacing-6);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Fallback sin backdrop-filter */
+  @supports not (backdrop-filter: blur(1px)) {
+    background: rgba(13, 13, 60, 0.7);
+  }
+
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.hero-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: var(--spacing-1);
+  opacity: 0.85;
+}
+
+.hero-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-card__number {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  display: block;
+}
+
+.hero-card__label {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+  white-space: nowrap;
+}
+
+/* Badge pill "Garantizado" */
+.hero-card__badge {
+  display: inline-block;
+  margin-top: var(--spacing-2);
+  padding: 2px var(--spacing-3);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  align-self: flex-start;
+}
+
+/* Barra de progreso */
+.hero-card__progress {
+  margin-top: var(--spacing-2);
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero-card__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(14, 165, 233, 0.8), rgba(52, 52, 176, 0.9));
+  border-radius: 999px;
+}
+
+/* ── Posicionamiento individual de cada card ── */
+.hero-card--ops {
+  top: 0;
+  left: 0;
+  width: 220px;
+}
+
+.hero-card--response {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  @supports not (backdrop-filter: blur(1px)) {
+    background: rgba(13, 13, 60, 0.82);
+  }
+}
+
+.hero-card--response .hero-card__number {
+  font-size: var(--font-size-3xl);
+}
+
+.hero-card--satisfaction {
+  bottom: 0;
+  right: 0;
+  width: 210px;
+}
+
+/* ── Stats strip ── */
+.stats-strip {
+  background: var(--color-white);
+  padding-block: clamp(2rem, 5vw, 3rem);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.stat-number {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  display: block;
+  line-height: 1.4;
 }
 
 /* ── TARJETAS DE SERVICIO ── */
@@ -1464,5 +1650,152 @@ h1, h2, h3, h4, h5, h6 {
 
   .article-body {
     max-width: 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMACIONES — Loginco Corp
+   Todas las animaciones están condicionadas a prefers-reduced-motion.
+   Los elementos animados parten de un estado "invisible" (.animate-on-scroll)
+   y reciben la clase .is-visible vía IntersectionObserver en base.html.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Estado inicial: elementos que entran con scroll reveal ── */
+/*
+   Por defecto los elementos son completamente visibles.
+   Solo aplicamos el estado inicial de animación cuando el navegador
+   indica que acepta movimiento (no-preference). Así, si JS no carga
+   o si el usuario prefiere movimiento reducido, el contenido es visible.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+
+  /* Variante con retraso para elementos en grid (stagger) */
+  .animate-on-scroll.delay-1 { transition-delay: 0.08s; }
+  .animate-on-scroll.delay-2 { transition-delay: 0.16s; }
+  .animate-on-scroll.delay-3 { transition-delay: 0.24s; }
+  .animate-on-scroll.delay-4 { transition-delay: 0.32s; }
+
+  /* Estado visible: aplicado por IntersectionObserver */
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Hero: fade-in de entrada al cargar la página ── */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__content {
+    animation: hero-fade-in 0.7s ease both;
+  }
+
+  .hero__visual {
+    animation: hero-fade-in 0.7s ease 0.2s both;
+  }
+
+  @keyframes hero-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ── Hero cards: flotación sutil individual con desfase ── */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card--ops {
+    animation: hero-float-a 6s ease-in-out infinite;
+  }
+
+  .hero-card--response {
+    animation: hero-float-b 7s ease-in-out infinite;
+  }
+
+  .hero-card--satisfaction {
+    animation: hero-float-c 5.5s ease-in-out infinite;
+  }
+
+  @keyframes hero-float-a {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+
+  @keyframes hero-float-b {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50%       { transform: translate(-50%, calc(-50% - 8px)); }
+  }
+
+  @keyframes hero-float-c {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+}
+
+/* ── Microinteracción: ícono de service-card en hover del card padre ── */
+@media (prefers-reduced-motion: no-preference) {
+  .service-card__icon {
+    transition:
+      transform 0.25s ease,
+      background-color var(--transition);
+  }
+
+  .service-card:hover .service-card__icon {
+    transform: scale(1.1);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .service-card:hover .service-card__icon svg {
+    stroke: var(--color-white);
+  }
+}
+
+/* Asegurar que el color del ícono SVG también transicione */
+.service-card__icon svg {
+  transition: stroke var(--transition);
+}
+
+/* ── Refinamiento hover tarjetas: consistencia entre service-card y post-card ── */
+/*
+   Las tarjetas ya tienen transition en el CSS base. Aquí nos aseguramos
+   de que el shadow elevado tenga la profundidad correcta con tinte primario.
+*/
+.service-card:hover {
+  box-shadow:
+    0 12px 32px rgba(52, 52, 176, 0.14),
+    0 4px 12px rgba(52, 52, 176, 0.08);
+}
+
+.post-card:hover {
+  box-shadow:
+    0 12px 32px rgba(52, 52, 176, 0.14),
+    0 4px 12px rgba(52, 52, 176, 0.08);
+  border-color: var(--color-primary-light);
+}
+
+/* ── CTA band: pulso sutil en el botón principal ── */
+@media (prefers-reduced-motion: no-preference) {
+  .cta-band .btn-white {
+    animation: cta-pulse 3.5s ease-in-out infinite;
+  }
+
+  @keyframes cta-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    50%       { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12); }
+  }
+
+  /* Al hacer hover se detiene el pulso y aplica el lift estándar */
+  .cta-band .btn-white:hover {
+    animation: none;
   }
 }
