@@ -1,6 +1,6 @@
 import json
 
-import groq as groq_lib
+import openai
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import ImproperlyConfigured
 from django.http import JsonResponse
@@ -77,13 +77,13 @@ class GenerateContentView(View):
         try:
             raw_text, input_tokens, output_tokens = generate(system_prompt, user_prompt)
         except ImproperlyConfigured:
-            log.error_message = "ANTHROPIC_API_KEY no configurada."
+            log.error_message = "DO_MODEL_ACCESS_KEY no configurada."
             log.save()
             return JsonResponse(
                 {"error": "API key no configurada en el servidor."},
                 status=503,
             )
-        except groq_lib.APIError as exc:
+        except openai.APIError as exc:
             log.error_message = str(exc)
             log.save()
             return JsonResponse(

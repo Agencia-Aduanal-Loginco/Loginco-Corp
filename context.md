@@ -36,7 +36,7 @@
 | Base de datos | SQLite (dev) / PostgreSQL 16+ (prod) | Dev usa SQLite por simplicidad |
 | ORM / Migraciones | Django ORM | |
 | Editor WYSIWYG | TipTap (vía JS bundle) | Bundle en `static/js/tiptap-bundle.js` ✓; widget `TiptapWidget` en `apps/blog/widgets.py` ✓ |
-| IA / Contenido | Groq API (`llama-3.3-70b-versatile`) | Cliente en `apps/ai_assistant/client.py` ✓ — **Nota: se migró de Anthropic Claude a Groq** |
+| IA / Contenido | DigitalOcean AI Platform (`llama3.3-70b-instruct`) | Cliente en `apps/ai_assistant/client.py` ✓ — OpenAI-compatible endpoint vía SDK `openai` |
 | Media (imágenes) | django-imagekit + Pillow | WebP lazy via `ImageSpecField`; pre-generación en signal `post_save` |
 | Media (video) | Campo `video_file` + `video_embed_url` | Subida directa o embed externo (YouTube/Vimeo) |
 | Almacenamiento estático | WhiteNoise (dev y prod) | S3-compatible configurable en producción |
@@ -92,7 +92,7 @@ loginco/                          # Directorio raíz del proyecto
 │   └── ai_assistant/             # **Fase 3 — completada** ✓
 │       ├── views.py              # GenerateContentView — lógica completa con rate limiting ✓
 │       ├── urls.py               # /admin/ai/generate/ ✓
-│       ├── client.py             # Cliente Groq singleton (llama-3.3-70b-versatile) ✓
+│       ├── client.py             # Cliente DO Gradient singleton (llama3.3-70b-instruct, OpenAI SDK) ✓
 │       ├── prompts.py            # Biblioteca de prompts por tipo (full_post, meta_only, excerpt, improve, alt_text) ✓
 │       ├── models.py             # AIGenerationLog — registro de generaciones con tokens ✓
 │       └── admin.py              # AIGenerationLogAdmin (solo lectura) ✓
@@ -254,7 +254,7 @@ class MediaFile(TimeStampedModel):
 | Tema visual Unfold | ✓ Implementado | Color primario azul Loginco (#3434b0); navegación lateral configurada |
 | Registro de modelos | ✓ Implementado | SiteTarget, Category, Tag, Post con fieldsets completos |
 | Editor TipTap | ✓ Implementado | Bundle en `static/js/tiptap-bundle.js`; `TiptapWidget` en `apps/blog/widgets.py` |
-| Asistente IA | ✓ Implementado | Groq (llama-3.3-70b); modal JS en `ai-assistant.js`; log en `AIGenerationLog` |
+| Asistente IA | ✓ Implementado | DO Gradient (llama3.3-70b-instruct); modal JS en `ai-assistant.js`; log en `AIGenerationLog` |
 | Preview SEO | ✓ Implementado | Snippet Google en `templates/admin/blog/post/change_form.html` |
 | Admin MediaFile | ✓ Implementado | `media_manager/admin.py` con miniatura, dimensiones, preview |
 | Admin AIGenerationLog | ✓ Implementado | Solo lectura; registra modelo, tokens, usuario, éxito/error |
@@ -370,19 +370,21 @@ class MediaFile(TimeStampedModel):
 
 ---
 
-## 9. Integración IA (Fase 3 — completada con Groq)
+## 9. Integración IA (Fase 3 — completada con DigitalOcean AI Platform)
 
-> **Cambio arquitectónico:** Se migró de Anthropic Claude API a **Groq** (`llama-3.3-70b-versatile`).
-> `ANTHROPIC_API_KEY` sigue en settings por si se retoma Claude, pero el cliente activo usa `GROQ_API_KEY`.
+> **Cambio arquitectónico:** Se migró de Groq a **DigitalOcean AI Platform (Gradient)**.
+> Endpoint OpenAI-compatible: `https://inference.do-ai.run/v1/`. Cliente activo usa `DO_MODEL_ACCESS_KEY`.
+> Ventaja: mismo endpoint soporta modelos OSS (Llama, Qwen, Mistral) y comerciales (Claude, GPT).
 
 ### 9.1 Configuración actual
 
 ```python
 # apps/ai_assistant/client.py  ✓
-import groq
-MODEL = "llama-3.3-70b-versatile"
+import openai
+DO_INFERENCE_URL = "https://inference.do-ai.run/v1/"
+MODEL = "llama3.3-70b-instruct"
 MAX_TOKENS = 4096
-# Singleton lazy — falla con ImproperlyConfigured si GROQ_API_KEY no está configurada
+# Singleton lazy — falla con ImproperlyConfigured si DO_MODEL_ACCESS_KEY no está configurada
 ```
 
 ### 9.2 Tipos de generación planeados
@@ -399,7 +401,7 @@ MAX_TOKENS = 4096
 
 - `apps/ai_assistant/views.py` — `GenerateContentView` completa: validación, rate limiting (3/sesión), log ✓
 - `apps/ai_assistant/urls.py` — ruta `/admin/ai/generate/` registrada ✓
-- `apps/ai_assistant/client.py` — cliente Groq singleton con `generate(system, user)` → `(text, input_tokens, output_tokens)` ✓
+- `apps/ai_assistant/client.py` — cliente DO Gradient singleton con `generate(system, user)` → `(text, input_tokens, output_tokens)` ✓
 - `apps/ai_assistant/prompts.py` — `build_prompt(generation_type, context)` con los 5 tipos ✓
 - `apps/ai_assistant/models.py` — `AIGenerationLog` registra cada generación ✓
 - `apps/ai_assistant/admin.py` — admin solo lectura para `AIGenerationLog` ✓
@@ -426,11 +428,8 @@ DJANGO_ALLOWED_HOSTS=loginco.com.mx,www.loginco.com.mx
 # Base de datos (producción — PostgreSQL)
 DATABASE_URL=postgres://user:password@localhost:5432/loginco_db
 
-# IA — Groq (cliente activo)
-GROQ_API_KEY=
-
-# Anthropic (reservado — actualmente no usado)
-ANTHROPIC_API_KEY=
+# IA — DigitalOcean AI Platform (Gradient)
+DO_MODEL_ACCESS_KEY=
 
 # Media Storage (producción — S3-compatible, opcional)
 AWS_ACCESS_KEY_ID=
@@ -484,7 +483,7 @@ CLOUDFLARE_STREAM_TOKEN=
 
 ### Fase 3 — Integración IA ✓ COMPLETADA
 
-- [x] `apps/ai_assistant/client.py` — cliente Groq (`llama-3.3-70b-versatile`)
+- [x] `apps/ai_assistant/client.py` — cliente DO Gradient (`llama3.3-70b-instruct`, OpenAI SDK)
 - [x] `apps/ai_assistant/prompts.py` — prompts por tipo (full_post, meta_only, excerpt, improve, alt_text)
 - [x] `GenerateContentView` con validación, rate limiting (3/sesión) y manejo de errores
 - [x] UI del asistente en el admin — `static/js/ai-assistant.js` (modal vanilla JS + AJAX)
@@ -524,7 +523,7 @@ python-decouple>=3.8
 pillow>=10.4
 django-imagekit>=5.0
 django-apscheduler>=0.6
-anthropic>=0.40
+openai>=1.50
 django-unfold>=0.40
 django-meta>=2.4
 whitenoise>=6.7
@@ -549,7 +548,7 @@ psycopg[binary]>=3.2
 | Django Admin + Unfold | Wagtail | Menor curva de aprendizaje, más rápido de implementar |
 | TipTap | CKEditor / Quill | Más moderno, mejor output HTML limpio, extensible |
 | Unfold | django-jazzmin | Mejor soporte mobile en el admin, mantenimiento activo |
-| Claude API | OpenAI | Mejor rendimiento en español, coherencia con stack existente |
+| DO AI Platform | Groq / Anthropic directo | Endpoint único para OSS + comerciales; integrable con hosting DO; OpenAI-compatible |
 | SQLite (dev) | PostgreSQL en dev | Simplifica el setup local; prod usa PostgreSQL |
 | PostgreSQL (prod) | MySQL | Full-text search nativo, JSONField, mejor soporte Django |
 | django-apscheduler | Celery + Redis | Sin dependencia externa de Redis; jobs en PostgreSQL |

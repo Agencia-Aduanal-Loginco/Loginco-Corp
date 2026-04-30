@@ -1,35 +1,36 @@
 """
-Cliente singleton para la API de Groq.
+Cliente singleton para DigitalOcean AI Platform (Gradient).
 Carga lazy de la instancia — no falla en import si la key no está configurada.
 """
 
-import groq as groq_lib
+import openai
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-MODEL = "llama-3.3-70b-versatile"
+DO_INFERENCE_URL = "https://inference.do-ai.run/v1/"
+MODEL = "llama3.3-70b-instruct"
 MAX_TOKENS = 4096
 
-_client: groq_lib.Groq | None = None
+_client: openai.OpenAI | None = None
 
 
-def _get_client() -> groq_lib.Groq:
-    """Retorna la instancia singleton del cliente Groq, creándola si es necesario."""
+def _get_client() -> openai.OpenAI:
+    """Retorna la instancia singleton del cliente DO Gradient, creándola si es necesario."""
     global _client
     if _client is None:
-        api_key = getattr(settings, "GROQ_API_KEY", "")
+        api_key = getattr(settings, "DO_MODEL_ACCESS_KEY", "")
         if not api_key:
             raise ImproperlyConfigured(
-                "GROQ_API_KEY no está configurada. "
+                "DO_MODEL_ACCESS_KEY no está configurada. "
                 "Agrega la variable en tu archivo .env para usar el asistente IA."
             )
-        _client = groq_lib.Groq(api_key=api_key)
+        _client = openai.OpenAI(base_url=DO_INFERENCE_URL, api_key=api_key)
     return _client
 
 
 def generate(system: str, user: str) -> tuple[str, int, int]:
     """
-    Envía una solicitud a la API de Groq y retorna la respuesta.
+    Envía una solicitud a DigitalOcean AI Platform y retorna la respuesta.
 
     Args:
         system: Prompt del sistema con instrucciones y contexto de marca.
@@ -40,8 +41,8 @@ def generate(system: str, user: str) -> tuple[str, int, int]:
         de texto generada por el modelo.
 
     Raises:
-        ImproperlyConfigured: Si GROQ_API_KEY no está configurada.
-        groq_lib.APIError: Si ocurre un error en la comunicación con la API.
+        ImproperlyConfigured: Si DO_MODEL_ACCESS_KEY no está configurada.
+        openai.APIError: Si ocurre un error en la comunicación con la API.
     """
     client = _get_client()
     completion = client.chat.completions.create(

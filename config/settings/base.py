@@ -108,11 +108,8 @@ CACHES = {
 APSCHEDULER_DATETIME_FORMAT = "d/m/Y H:i:s"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
-# Anthropic Claude API
-ANTHROPIC_API_KEY = config("ANTHROPIC_API_KEY", default="")
-
-# Groq API
-GROQ_API_KEY = config("GROQ_API_KEY", default="")
+# DigitalOcean AI Platform (Gradient)
+DO_MODEL_ACCESS_KEY = config("DO_MODEL_ACCESS_KEY", default="")
 
 # django-meta (SEO)
 META_SITE_PROTOCOL = "https"
