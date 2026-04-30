@@ -105,6 +105,33 @@ class MediaFile(TimeStampedModel):
     def is_video(self):
         return self.file_type == self.TYPE_VIDEO
 
+    def get_lg_webp_url(self):
+        """URL del WebP grande (1280px). Fallback a la imagen original si falla."""
+        if not self.image:
+            return ""
+        try:
+            return self.image_lg_webp.url
+        except Exception:
+            return self.image.url
+
+    def get_md_webp_url(self):
+        """URL del WebP mediano (800px). Fallback a la imagen original si falla."""
+        if not self.image:
+            return ""
+        try:
+            return self.image_md_webp.url
+        except Exception:
+            return self.image.url
+
+    def get_thumb_webp_url(self):
+        """URL del WebP miniatura (400px). Fallback a la imagen original si falla."""
+        if not self.image:
+            return ""
+        try:
+            return self.image_thumb_webp.url
+        except Exception:
+            return self.image.url
+
     def save(self, *args, **kwargs):
         # Poblar dimensiones y tamaño de imagen al crear
         if self.is_image and self.image and not self.width:

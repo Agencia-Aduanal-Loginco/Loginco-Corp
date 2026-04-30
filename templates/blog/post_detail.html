@@ -68,7 +68,7 @@
     {% if post.featured_image and post.featured_image.image %}
     <div class="article-hero__image">
       <picture>
-        <source srcset="{{ post.featured_image.image_lg_webp.url }}" type="image/webp" />
+        <source srcset="{{ post.featured_image.get_lg_webp_url }}" type="image/webp" />
         <img src="{{ post.featured_image.image.url }}"
              alt="{{ post.featured_image.alt_text }}"
              fetchpriority="high"

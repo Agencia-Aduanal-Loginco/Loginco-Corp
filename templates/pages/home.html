@@ -277,7 +277,7 @@
         <div class="post-card__image-wrap">
           {% if post.featured_image and post.featured_image.image %}
           <picture>
-            <source srcset="{{ post.featured_image.image_md_webp.url }}" type="image/webp" />
+            <source srcset="{{ post.featured_image.get_md_webp_url }}" type="image/webp" />
             <img src="{{ post.featured_image.image.url }}"
                  alt="{{ post.featured_image.alt_text }}"
                  loading="lazy"
