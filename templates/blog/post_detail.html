@@ -7,7 +7,7 @@
 {% block og_title %}{{ post.get_effective_og_title }}{% endblock %}
 {% block og_description %}{{ post.get_effective_og_description }}{% endblock %}
 {% block og_image %}
-{% if post.featured_image %}
+{% if post.featured_image and post.featured_image.image %}
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.image.url }}" />
 {% endif %}
 {% endblock %}
@@ -23,7 +23,7 @@
   "description": "{{ post.meta_description|escapejs }}",
   "datePublished": "{{ post.published_at|date:'c' }}",
   "dateModified": "{{ post.updated_at|date:'c' }}",
-  {% if post.featured_image %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.image.url }}",{% endif %}
+  {% if post.featured_image and post.featured_image.image %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ post.featured_image.image.url }}",{% endif %}
   "author": {
     "@type": "Organization",
     "name": "Loginco Corp",
@@ -65,7 +65,7 @@
     </nav>
 
     {# Imagen destacada #}
-    {% if post.featured_image %}
+    {% if post.featured_image and post.featured_image.image %}
     <div class="article-hero__image">
       <picture>
         <source srcset="{{ post.featured_image.image_lg_webp.url }}" type="image/webp" />

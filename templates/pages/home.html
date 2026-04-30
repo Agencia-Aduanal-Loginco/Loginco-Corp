@@ -275,7 +275,7 @@
       <article class="post-card animate-on-scroll delay-{{ forloop.counter }}">
 
         <div class="post-card__image-wrap">
-          {% if post.featured_image %}
+          {% if post.featured_image and post.featured_image.image %}
           <picture>
             <source srcset="{{ post.featured_image.image_md_webp.url }}" type="image/webp" />
             <img src="{{ post.featured_image.image.url }}"
