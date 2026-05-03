@@ -5,6 +5,12 @@ from django.apps import AppConfig
 
 logger = logging.getLogger(__name__)
 
+_SKIP_COMMANDS = {
+    "migrate", "makemigrations", "collectstatic", "createsuperuser",
+    "createcachetable", "test", "check", "inspectdb", "dumpdata",
+    "loaddata", "flush", "dbshell", "showmigrations", "sqlmigrate",
+}
+
 
 class CoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
@@ -12,13 +18,12 @@ class CoreConfig(AppConfig):
     verbose_name = "Core"
 
     def ready(self):
-        # No iniciar el scheduler en comandos de gestión (migrate, collectstatic, etc.)
-        is_management = len(sys.argv) > 1 and sys.argv[1] not in ("runserver", "shell")
-        if is_management:
+        # Bloquear comandos de gestión que no deben iniciar el scheduler
+        if len(sys.argv) > 1 and sys.argv[1] in _SKIP_COMMANDS:
             return
 
         # En desarrollo con autoreloader: solo iniciar en el proceso hijo (RUN_MAIN=true)
-        # En producción (gunicorn): RUN_MAIN no está definido, así que siempre inicia
+        # En producción (gunicorn/wsgi): RUN_MAIN no existe, siempre debe iniciar
         run_main = os.environ.get("RUN_MAIN", "")
         is_dev = "runserver" in sys.argv
 
