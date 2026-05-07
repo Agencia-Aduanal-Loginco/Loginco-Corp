@@ -6,6 +6,13 @@
 {% block content %}
 
 <section class="hero" aria-label="Inicio">
+  <img class="hero__bg-photo"
+       src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1920&q=80&auto=format&fit=crop"
+       alt=""
+       aria-hidden="true"
+       width="1920"
+       height="1080"
+       fetchpriority="high" />
   <div class="container">
     <div class="hero__inner">
 
@@ -131,56 +138,83 @@
     <div class="grid-3">
 
       <article class="service-card animate-on-scroll delay-1">
-        <div class="service-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
+        <div class="service-card__cover">
+          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop"
+               alt="Gestión de documentos aduanales y trámites de comercio exterior"
+               loading="lazy"
+               width="800"
+               height="450" />
         </div>
-        <h3 class="service-card__title">Agencia Aduanal</h3>
-        <p class="service-card__description">
-          Gestión integral de trámites ante el SAT y la Aduana Mexicana.
-          Despacho ágil de importación y exportación con peritos certificados.
-        </p>
-        <a href="https://agencia-aduanal.loginco.com.mx" class="btn btn-outline" rel="noopener">
-          Saber más
-        </a>
+        <div class="service-card__inner">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Agencia Aduanal</h3>
+          <p class="service-card__description">
+            Gestión integral de trámites ante el SAT y la Aduana Mexicana.
+            Despacho ágil de importación y exportación con peritos certificados.
+          </p>
+          <a href="https://agencia-aduanal.loginco.com.mx" class="btn btn-outline" rel="noopener">
+            Saber más
+          </a>
+        </div>
       </article>
 
       <article class="service-card animate-on-scroll delay-2">
-        <div class="service-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-          </svg>
+        <div class="service-card__cover">
+          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80&auto=format&fit=crop"
+               alt="Bodega y patio de maniobras con almacenaje en depósito fiscal"
+               loading="lazy"
+               width="800"
+               height="450" />
         </div>
-        <h3 class="service-card__title">Bodega &amp; Patio</h3>
-        <p class="service-card__description">
-          Almacenaje en depósito fiscal y patio de maniobras con control de inventario
-          en tiempo real y custodia certificada.
-        </p>
-        <a href="https://bodega-patio.loginco.com.mx" class="btn btn-outline" rel="noopener">
-          Saber más
-        </a>
+        <div class="service-card__inner">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Bodega &amp; Patio</h3>
+          <p class="service-card__description">
+            Almacenaje en depósito fiscal y patio de maniobras con control de inventario
+            en tiempo real y custodia certificada.
+          </p>
+          <a href="https://bodega-patio.loginco.com.mx" class="btn btn-outline" rel="noopener">
+            Saber más
+          </a>
+        </div>
       </article>
 
       <article class="service-card animate-on-scroll delay-3">
-        <div class="service-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="1" y="3" width="15" height="13" rx="1"/>
-            <path d="M16 8h5l3 3v6h-8V8z"/>
-            <circle cx="5.5" cy="18.5" r="2.5"/>
-            <circle cx="18.5" cy="18.5" r="2.5"/>
-          </svg>
+        <div class="service-card__cover">
+          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80&auto=format&fit=crop"
+               alt="Transporte de carga en México con rastreo GPS en tiempo real"
+               loading="lazy"
+               width="800"
+               height="450" />
         </div>
-        <h3 class="service-card__title">Transporte</h3>
-        <p class="service-card__description">
-          Transporte de carga local y foráneo para mercancías de comercio exterior,
-          con rastreo en tiempo real y operadores certificados.
-        </p>
-        <a href="https://transporte.loginco.com.mx" class="btn btn-outline" rel="noopener">
-          Saber más
-        </a>
+        <div class="service-card__inner">
+          <div class="service-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="1" y="3" width="15" height="13" rx="1"/>
+              <path d="M16 8h5l3 3v6h-8V8z"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/>
+              <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <h3 class="service-card__title">Transporte</h3>
+          <p class="service-card__description">
+            Transporte de carga local y foráneo para mercancías de comercio exterior,
+            con rastreo en tiempo real y operadores certificados.
+          </p>
+          <a href="https://transporte.loginco.com.mx" class="btn btn-outline" rel="noopener">
+            Saber más
+          </a>
+        </div>
       </article>
 
     </div>

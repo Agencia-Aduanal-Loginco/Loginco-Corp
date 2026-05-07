@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 DO_INFERENCE_URL = "https://inference.do-ai.run/v1/"
-MODEL = "llama3.3-70b-instruct"
+MODEL = "openai-gpt-oss-20b"
 MAX_TOKENS = 4096
 
 _client: openai.OpenAI | None = None
