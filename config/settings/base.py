@@ -121,13 +121,15 @@ META_USE_GOOGLEPLUS_PROPERTIES = False
 META_DEFAULT_KEYWORDS = ["agencia aduanal", "logística", "transporte", "bodega", "loginco"]
 META_INCLUDE_KEYWORDS_TAG = True
 
-# Email
-EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
-EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+# Email — SendGrid SMTP relay
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"  # SendGrid siempre usa la cadena literal "apikey"
+EMAIL_HOST_PASSWORD = config("SENDGRID_API_KEY", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@loginco.com.mx")
+CONTACT_EMAIL = config("CONTACT_EMAIL", default="contacto@loginco.com.mx")
 
 # Unfold Admin
 UNFOLD = {

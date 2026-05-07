@@ -39,92 +39,108 @@
   <div class="container">
     <div class="contact-layout">
 
+      {# Mensajes de éxito / error ── #}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="form-alert form-alert--{{ message.tags }}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       {# Formulario ── #}
       <div>
         <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-8);">
           Envíanos un mensaje
         </h2>
 
-        <form action="mailto:contacto@loginco.com.mx"
-              method="get"
-              enctype="text/plain"
+        <form action="{% url 'pages:contact' %}"
+              method="post"
               novalidate>
+          {% csrf_token %}
 
           <div class="form-grid form-grid--2col">
 
-            <div class="form-field">
-              <label class="form-label" for="contact-name">
+            <div class="form-field{% if form.nombre.errors %} form-field--error{% endif %}">
+              <label class="form-label" for="id_nombre">
                 Nombre <span class="required" aria-hidden="true">*</span>
               </label>
               <input type="text"
-                     id="contact-name"
+                     id="id_nombre"
                      name="nombre"
+                     value="{{ form.nombre.value|default:'' }}"
                      class="form-input"
                      placeholder="Tu nombre completo"
                      autocomplete="name"
                      required />
+              {% if form.nombre.errors %}
+                <span class="form-error">{{ form.nombre.errors.0 }}</span>
+              {% endif %}
             </div>
 
             <div class="form-field">
-              <label class="form-label" for="contact-company">
-                Empresa
-              </label>
+              <label class="form-label" for="id_empresa">Empresa</label>
               <input type="text"
-                     id="contact-company"
+                     id="id_empresa"
                      name="empresa"
+                     value="{{ form.empresa.value|default:'' }}"
                      class="form-input"
                      placeholder="Nombre de tu empresa"
                      autocomplete="organization" />
             </div>
 
-            <div class="form-field">
-              <label class="form-label" for="contact-email">
+            <div class="form-field{% if form.correo.errors %} form-field--error{% endif %}">
+              <label class="form-label" for="id_correo">
                 Correo electrónico <span class="required" aria-hidden="true">*</span>
               </label>
               <input type="email"
-                     id="contact-email"
+                     id="id_correo"
                      name="correo"
+                     value="{{ form.correo.value|default:'' }}"
                      class="form-input"
                      placeholder="correo@tuempresa.com"
                      autocomplete="email"
                      required />
+              {% if form.correo.errors %}
+                <span class="form-error">{{ form.correo.errors.0 }}</span>
+              {% endif %}
             </div>
 
             <div class="form-field">
-              <label class="form-label" for="contact-phone">
-                Teléfono / WhatsApp
-              </label>
+              <label class="form-label" for="id_telefono">Teléfono / WhatsApp</label>
               <input type="tel"
-                     id="contact-phone"
+                     id="id_telefono"
                      name="telefono"
+                     value="{{ form.telefono.value|default:'' }}"
                      class="form-input"
                      placeholder="+52 (xxx) xxx-xxxx"
                      autocomplete="tel" />
             </div>
 
             <div class="form-field">
-              <label class="form-label" for="contact-service">
-                Servicio de interés
-              </label>
-              <select id="contact-service" name="servicio" class="form-select">
+              <label class="form-label" for="id_servicio">Servicio de interés</label>
+              <select id="id_servicio" name="servicio" class="form-select">
                 <option value="">Selecciona una opción</option>
-                <option value="agencia-aduanal">Agencia Aduanal</option>
-                <option value="bodega-patio">Bodega &amp; Patio</option>
-                <option value="transporte">Transporte de Carga</option>
-                <option value="todos">Todos los servicios</option>
+                <option value="agencia-aduanal" {% if form.servicio.value == "agencia-aduanal" %}selected{% endif %}>Agencia Aduanal</option>
+                <option value="bodega-patio"    {% if form.servicio.value == "bodega-patio" %}selected{% endif %}>Bodega &amp; Patio</option>
+                <option value="transporte"      {% if form.servicio.value == "transporte" %}selected{% endif %}>Transporte de Carga</option>
+                <option value="todos"           {% if form.servicio.value == "todos" %}selected{% endif %}>Todos los servicios</option>
               </select>
             </div>
 
-            <div class="form-field form-field--full">
-              <label class="form-label" for="contact-message">
+            <div class="form-field form-field--full{% if form.mensaje.errors %} form-field--error{% endif %}">
+              <label class="form-label" for="id_mensaje">
                 Mensaje <span class="required" aria-hidden="true">*</span>
               </label>
-              <textarea id="contact-message"
+              <textarea id="id_mensaje"
                         name="mensaje"
                         class="form-textarea"
                         rows="5"
                         placeholder="Cuéntanos brevemente tu operación: qué importas/exportas, desde/hacia dónde, volumen estimado..."
-                        required></textarea>
+                        required>{{ form.mensaje.value|default:'' }}</textarea>
+              {% if form.mensaje.errors %}
+                <span class="form-error">{{ form.mensaje.errors.0 }}</span>
+              {% endif %}
             </div>
 
           </div>

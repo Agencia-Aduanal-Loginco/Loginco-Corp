@@ -1450,6 +1450,40 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.6;
 }
 
+.form-field--error .form-input,
+.form-field--error .form-select,
+.form-field--error .form-textarea {
+  border-color: #dc2626;
+  outline-color: #dc2626;
+}
+
+.form-error {
+  display: block;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: #dc2626;
+}
+
+.form-alert {
+  padding: var(--spacing-4) var(--spacing-5);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-6);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.form-alert--success {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.form-alert--error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
 /* ── PAGINACIÓN ── */
 .pagination {
   display: flex;
