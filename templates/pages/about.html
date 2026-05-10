@@ -9,16 +9,19 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "https://loginco.com.mx/#organization",
   "name": "Loginco Corp",
   "description": "Agencia aduanal, bodega y transporte de carga en México",
   "url": "{{ request.scheme }}://{{ request.get_host }}",
   "slogan": "Cero estrés, aduanal",
-  "areaServed": "MX",
+  "areaServed": {
+    "@type": "Country",
+    "name": "México"
+  },
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "MX"
-  },
-  "sameAs": []
+  }
 }
 </script>
 {% endblock %}

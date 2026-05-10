@@ -8,25 +8,44 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "Servicios Loginco Corp",
-  "itemListElement": [
+  "@graph": [
     {
-      "@type": "ListItem",
-      "position": 1,
+      "@type": "LocalBusiness",
+      "@id": "https://loginco.com.mx/#organization",
+      "name": "Loginco Corp",
+      "description": "Agencia aduanal, bodega y transporte de carga en México",
+      "url": "https://loginco.com.mx",
+      "slogan": "Cero estrés, aduanal",
+      "areaServed": {
+        "@type": "Country",
+        "name": "México"
+      }
+    },
+    {
+      "@type": "Service",
       "name": "Agencia Aduanal",
+      "description": "Gestión de trámites de importación y exportación ante el SAT y la Aduana Mexicana. Despacho ágil con peritos certificados.",
+      "serviceType": "Agencia Aduanal",
+      "provider": { "@id": "https://loginco.com.mx/#organization" },
+      "areaServed": { "@type": "Country", "name": "México" },
       "url": "https://agencia-aduanal.loginco.com.mx"
     },
     {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Bodega &amp; Patio",
+      "@type": "Service",
+      "name": "Bodega y Patio de Maniobras",
+      "description": "Almacenaje seguro en depósito fiscal y patio de maniobras con control de inventario en tiempo real.",
+      "serviceType": "Almacenaje y Logística",
+      "provider": { "@id": "https://loginco.com.mx/#organization" },
+      "areaServed": { "@type": "Country", "name": "México" },
       "url": "https://bodega-patio.loginco.com.mx"
     },
     {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Transporte",
+      "@type": "Service",
+      "name": "Transporte de Carga",
+      "description": "Transporte de mercancías de comercio exterior en todo México con operadores certificados y rastreo GPS en tiempo real.",
+      "serviceType": "Transporte de Carga",
+      "provider": { "@id": "https://loginco.com.mx/#organization" },
+      "areaServed": { "@type": "Country", "name": "México" },
       "url": "https://transporte.loginco.com.mx"
     }
   ]
