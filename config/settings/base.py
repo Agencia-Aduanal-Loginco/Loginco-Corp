@@ -113,7 +113,7 @@ DO_MODEL_ACCESS_KEY = config("DO_MODEL_ACCESS_KEY", default="")
 
 # django-meta (SEO)
 META_SITE_PROTOCOL = "https"
-META_SITE_DOMAIN = "loginco.com.mx"
+META_SITE_DOMAIN = "www.loginco.com.mx"
 META_SITE_NAME = "Loginco Corp"
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True

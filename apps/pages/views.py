@@ -74,7 +74,7 @@ class RobotsTxtView(View):
         "Allow: /\n"
         "Disallow: /admin/\n"
         "\n"
-        "Sitemap: https://loginco.com.mx/sitemap.xml\n"
+        "Sitemap: https://www.loginco.com.mx/sitemap.xml\n"
     )
 
     def get(self, request):
