@@ -1573,6 +1573,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-muted);
 }
 
+.contact-email::before {
+  content: attr(data-u) "\40" attr(data-d);
+}
+
 /* ── PAGE HEADER ── */
 .page-header {
   background-color: var(--color-bg-alt);
