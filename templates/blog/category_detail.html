@@ -37,6 +37,7 @@
     {% if posts %}
     <div class="grid-3">
       {% for post in posts %}
+
       <article class="post-card">
 
         <div class="post-card__image-wrap">
@@ -89,6 +90,174 @@
     {% else %}
     <p style="text-align: center; color: var(--color-text-muted); padding-block: var(--spacing-16);">
       Aún no hay publicaciones en esta categoría. ¡Próximamente!
+    </p>
+    {% endif %}
+
+  </div>
+</section>
+
+{# ── Sección editorial por categoría ── #}
+<section class="section category-editorial" style="background-color: var(--color-bg-alt, #f9fafb);">
+  <div class="container">
+
+    {% if category.slug == "agencia-aduanal" %}
+    <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6);">
+      Agencia Aduanal en México: Todo lo que Necesitas Saber
+    </h2>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      La agencia aduanal desempeña un papel fundamental en el comercio exterior mexicano. Un agente aduanal certificado
+      por el SAT actúa como representante legal del importador o exportador ante la autoridad aduanera, garantizando que
+      cada pedimento se tramite correctamente, que las fracciones arancelarias sean precisas y que se cumplan todas las
+      regulaciones aplicables: normas NOM, permisos previos de la Secretaría de Economía, restricciones sanitarias y
+      cuotas compensatorias cuando correspondan.
+    </p>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      El despacho aduanal en México involucra múltiples etapas: la elaboración del pedimento, el cálculo y pago de
+      contribuciones (IGI, IVA, DTA y cuotas compensatorias), la verificación documental a través del sistema VUCEM y,
+      en su caso, la inspección física de la mercancía por parte del personal de la aduana. Errores en cualquiera de
+      estas fases pueden derivar en multas, demoras o el embargo de la carga, lo que hace imprescindible trabajar con
+      un agente aduanal experimentado que conozca a fondo la normativa vigente.
+    </p>
+    <p style="margin-bottom: var(--spacing-6); line-height: 1.75; color: var(--color-text);">
+      En Loginco Corp operamos principalmente en la aduana de Lázaro Cárdenas, uno de los puertos de mayor actividad
+      en el Pacífico mexicano, especializado en carga a granel, contenedores y automóviles. Nuestros artículos en
+      esta categoría cubren desde los conceptos básicos hasta temas avanzados de optimización fiscal en importaciones.
+    </p>
+    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-3);">
+      Temas que cubrimos en esta categoría
+    </h3>
+    <ul style="columns: 2; column-gap: var(--spacing-8); padding-left: var(--spacing-5);
+               line-height: 2; color: var(--color-text-muted);">
+      <li>Clasificación arancelaria y fracción HS correcta</li>
+      <li>Documentos requeridos para importar a México</li>
+      <li>Regímenes aduaneros: definitivo, temporal y tránsito</li>
+      <li>Normas Oficiales Mexicanas (NOM) en importación</li>
+      <li>VUCEM y ventanilla única de comercio exterior</li>
+      <li>Regulaciones sanitarias y fitosanitarias (SENASICA)</li>
+      <li>Cálculo de impuestos de importación (IGI, IVA, DTA)</li>
+      <li>Procedimientos ante errores o irregularidades aduanales</li>
+    </ul>
+
+    {% elif category.slug == "bodega-y-patio" %}
+    <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6);">
+      Bodega y Patio: Optimiza el Almacenaje de tu Mercancía
+    </h2>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      El correcto manejo de la mercancía en bodega y patio es tan determinante para tu operación como el despacho
+      aduanal mismo. Una vez que la carga cruza la aduana, necesita un espacio seguro, controlado y bien gestionado
+      antes de su distribución final. En el puerto de Lázaro Cárdenas, donde el flujo de contenedores es constante,
+      contar con un proveedor confiable de almacenaje puede significar la diferencia entre operaciones fluidas y
+      costosas demoras por falta de espacio o coordinación deficiente.
+    </p>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      El almacenamiento temporal permite mantener la mercancía bajo control fiscal mientras se completan los trámites
+      aduanales o se coordinan los transportes de distribución. Las bodegas especializadas ofrecen condiciones
+      específicas según el tipo de carga: temperatura controlada para perecederos, áreas certificadas para
+      fumigación fitosanitaria, patios para contenedores vacíos o llenos en espera, y plataformas de maniobras
+      para carga sobredimensionada o de proyecto especial.
+    </p>
+    <p style="margin-bottom: var(--spacing-6); line-height: 1.75; color: var(--color-text);">
+      Nuestros artículos en esta categoría están orientados a empresas importadoras que buscan reducir costos de
+      almacenaje, minimizar mermas y mejorar la trazabilidad de sus inventarios desde el momento en que la carga
+      llega al puerto hasta que sale hacia su destino final.
+    </p>
+    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-3);">
+      Temas que cubrimos en esta categoría
+    </h3>
+    <ul style="columns: 2; column-gap: var(--spacing-8); padding-left: var(--spacing-5);
+               line-height: 2; color: var(--color-text-muted);">
+      <li>Almacenaje temporal y recinto fiscalizado</li>
+      <li>Control de inventario y sistemas WMS</li>
+      <li>Maniobras de carga y descarga en puerto</li>
+      <li>Fumigación y tratamientos fitosanitarios</li>
+      <li>Patio de contenedores: gestión y costos</li>
+      <li>Seguro de mercancías en almacén</li>
+      <li>Carga a granel: sólidos y líquidos</li>
+      <li>Buenas prácticas de almacenamiento por tipo de producto</li>
+    </ul>
+
+    {% elif category.slug == "corporativo" %}
+    <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6);">
+      Logística Corporativa: Estrategia y Gestión de la Cadena de Suministro
+    </h2>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      Las empresas que importan y exportan con regularidad enfrentan desafíos logísticos que van mucho más allá de
+      un despacho aduanal puntual. La gestión estratégica de la cadena de suministro, la negociación de tarifas con
+      navieras y agentes de carga, la selección del Incoterm más conveniente para cada operación y la coordinación
+      entre múltiples proveedores de servicios logísticos requieren una visión corporativa estructurada y orientada
+      a resultados.
+    </p>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      El comercio exterior en México atraviesa un momento de transformación acelerada: el nearshoring está atrayendo
+      inversiones manufactureras hacia el país, los tiempos de tránsito marítimo se han vuelto más volátiles y la
+      digitalización de los trámites aduanales (VUCEM, carta porte, factura electrónica CFDI) obliga a las empresas
+      a actualizar constantemente sus procesos internos. Mantenerse informado es, hoy más que nunca, una ventaja
+      competitiva real.
+    </p>
+    <p style="margin-bottom: var(--spacing-6); line-height: 1.75; color: var(--color-text);">
+      En esta categoría publicamos análisis, casos de uso y mejores prácticas orientados a directivos, gerentes de
+      logística, compradores internacionales y equipos de supply chain que buscan optimizar sus operaciones y
+      reducir costos en toda la cadena de importación y exportación.
+    </p>
+    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-3);">
+      Temas que cubrimos en esta categoría
+    </h3>
+    <ul style="columns: 2; column-gap: var(--spacing-8); padding-left: var(--spacing-5);
+               line-height: 2; color: var(--color-text-muted);">
+      <li>Estrategia de sourcing internacional</li>
+      <li>Negociación de contratos logísticos</li>
+      <li>KPIs de desempeño en cadena de suministro</li>
+      <li>Gestión de riesgos en comercio exterior</li>
+      <li>Outsourcing logístico: ventajas y consideraciones</li>
+      <li>Tendencias del comercio exterior en México</li>
+      <li>Nearshoring y su impacto en la logística nacional</li>
+      <li>Digitalización aduanal: CFDI, carta porte y e-customs</li>
+    </ul>
+
+    {% elif category.slug == "transporte" %}
+    <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-6);">
+      Transporte de Carga en México: Guía Completa para Importadores
+    </h2>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      El transporte terrestre de carga es el eslabón que conecta el punto de entrada aduanal con el destino final
+      de la mercancía. En México, más del 55% de las mercancías se mueven por carretera, lo que convierte al
+      autotransporte en uno de los sectores más críticos para la economía nacional y para cualquier empresa que
+      importe o exporte productos de forma regular.
+    </p>
+    <p style="margin-bottom: var(--spacing-4); line-height: 1.75; color: var(--color-text);">
+      Desde el puerto de Lázaro Cárdenas —uno de los puertos de mayor movimiento de contenedores en el Pacífico
+      mexicano— salen diariamente unidades hacia el Bajío, la Ciudad de México, el norte y el sureste del país.
+      Elegir el transportista correcto implica conocer la normativa vigente de pesos y dimensiones de la SCT,
+      entender los requisitos del CFDI de traslado con complemento carta porte, y verificar que el operador cuente
+      con los seguros y permisos federales correspondientes.
+    </p>
+    <p style="margin-bottom: var(--spacing-6); line-height: 1.75; color: var(--color-text);">
+      Nuestros artículos en esta categoría ayudan a importadores, exportadores y gerentes de logística a tomar
+      mejores decisiones sobre el movimiento terrestre de su carga, optimizar costos de flete y garantizar la
+      integridad de la mercancía en tránsito.
+    </p>
+    <h3 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--spacing-3);">
+      Temas que cubrimos en esta categoría
+    </h3>
+    <ul style="columns: 2; column-gap: var(--spacing-8); padding-left: var(--spacing-5);
+               line-height: 2; color: var(--color-text-muted);">
+      <li>Carta Porte digital (CFDI de traslado)</li>
+      <li>Normativa de pesos y dimensiones SCT</li>
+      <li>Tipos de unidades: full, plataforma, cama baja</li>
+      <li>Seguro de carga terrestre en México</li>
+      <li>Transporte multimodal: puerto a destino final</li>
+      <li>Rutas y tiempos de tránsito desde Lázaro Cárdenas</li>
+      <li>Operadores federales de carga: requisitos y permisos</li>
+      <li>Cómo cotizar un flete terrestre correctamente</li>
+    </ul>
+
+    {% else %}
+    <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-4);">
+      Acerca de esta categoría
+    </h2>
+    <p style="line-height: 1.75; color: var(--color-text);">
+      Explora nuestros artículos y guías sobre {{ category.name }} para el comercio exterior en México.
+      Contenido especializado para importadores, exportadores y profesionales de logística.
     </p>
     {% endif %}
 

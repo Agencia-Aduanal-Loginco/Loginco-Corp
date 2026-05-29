@@ -4,6 +4,12 @@
 {% block title %}Blog | Loginco Corp{% endblock %}
 {% block meta_description %}Guías, noticias y recursos sobre comercio exterior en México. Agencia aduanal, bodega y transporte de carga.{% endblock %}
 
+{% block extra_head %}
+{% if is_paginated and page_obj.number > 1 %}
+<link rel="canonical" href="{% url 'blog:post_list' %}" />
+{% endif %}
+{% endblock %}
+
 {% block schema_markup %}
 <script type="application/ld+json">
 {
