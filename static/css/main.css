@@ -1994,3 +1994,54 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
   display: block;
 }
+
+/* ── Socios Comerciales ── */
+.socios__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+  .socios__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.socio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-6) var(--spacing-4);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.socio-card:hover,
+.socio-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(52, 52, 176, 0.12);
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.socio-card__logo {
+  width: 100%;
+  max-width: 140px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+
+.socio-card__name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.3;
+}

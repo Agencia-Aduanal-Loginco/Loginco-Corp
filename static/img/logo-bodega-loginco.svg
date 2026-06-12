@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="128" viewBox="0 0 280 128">
+  <rect width="280" height="128" fill="#eaeaf8" rx="10"/>
+  <rect x="1" y="1" width="278" height="126" fill="none" stroke="#3434b0" stroke-width="1.5" rx="9" opacity="0.4"/>
+  <!-- Box/storage icon -->
+  <g transform="translate(107, 22)">
+    <path d="M0,18 L33,0 L66,18 L66,54 L33,36 L0,54 Z" fill="none" stroke="#3434b0" stroke-width="2.5" stroke-linejoin="round"/>
+    <line x1="33" y1="0" x2="33" y2="36" stroke="#3434b0" stroke-width="2"/>
+    <line x1="0" y1="18" x2="66" y2="18" stroke="#3434b0" stroke-width="2" opacity="0.5"/>
+  </g>
+  <!-- Text -->
+  <text x="140" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#1b1b8c" text-anchor="middle" letter-spacing="0.5">BODEGA LOGINCO</text>
+</svg>
