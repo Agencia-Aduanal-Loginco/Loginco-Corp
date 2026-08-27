@@ -32,16 +32,23 @@
   {% endblock %}
 
   {# ── Favicon ── #}
-  <link rel="icon" href="{% static 'img/Isotipo.png' %}" type="image/png" />
-  <link rel="shortcut icon" href="{% static 'img/Isotipo.png' %}" />
+  <link rel="icon" href="{% static 'img/Isotipo.svg' %}" type="image/svg+xml" />
+  <link rel="shortcut icon" href="{% static 'img/Isotipo.svg' %}" />
 
-  {# ── Fuentes: Outfit (display) + Inter (body) ── #}
+  {# ── Hoja de estilos principal (bloqueante, imprescindible) ── #}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  {# ── Fuentes: Outfit (display) + Inter (body) — carga NO bloqueante ──
+       El stylesheet se solicita como media="print" y se activa en onload,
+       de modo que no retrasa el First Contentful Paint. Fallback en <noscript>. #}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  {# ── Hoja de estilos principal ── #}
-  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+        media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
+  </noscript>
 
   {% block extra_head %}{% endblock %}
 </head>
@@ -57,11 +64,16 @@
 
         {# Logo #}
         <a href="{% url 'pages:home' %}" class="nav-logo" aria-label="Loginco Corp — inicio">
-          <img src="{% static 'img/Logotipo-Horizontal-Comercial.png' %}"
-               alt="Loginco Corp"
-               height="38"
-               loading="eager"
-               style="height:38px;width:auto;display:block;" />
+          <picture>
+            <source srcset="{% static 'img/Logotipo-Horizontal-Comercial-320.webp' %}" type="image/webp" />
+            <img src="{% static 'img/Logotipo-Horizontal-Comercial.png' %}"
+                 alt="Loginco Corp"
+                 width="132"
+                 height="38"
+                 loading="eager"
+                 fetchpriority="high"
+                 style="height:38px;width:auto;display:block;" />
+          </picture>
         </a>
 
         {# Botón hamburger para mobile #}
