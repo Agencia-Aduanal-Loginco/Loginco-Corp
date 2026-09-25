@@ -1,13 +1,15 @@
 import json
 
-import openai
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.exceptions import ImproperlyConfigured
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from .client import MODEL, generate
+from apps.core.scheduler import get_scheduler
+
+from .client import MODEL
+from .jobs import run_generation
 from .models import AIGenerationLog
 from .prompts import build_prompt
 
@@ -62,6 +64,7 @@ class GenerateContentView(View):
             generation_type=generation_type,
             site_target=site_target,
             model_used=MODEL,
+            status=AIGenerationLog.STATUS_PENDING,
             success=False,  # Se actualiza a True si todo va bien
         )
 
@@ -69,69 +72,65 @@ class GenerateContentView(View):
         try:
             system_prompt, user_prompt = build_prompt(generation_type, context)
         except ValueError as exc:
+            log.status = AIGenerationLog.STATUS_ERROR
             log.error_message = str(exc)
             log.save()
             return JsonResponse({"error": str(exc)}, status=400)
 
-        # 5. Llamar a la API de Claude
-        try:
-            raw_text, input_tokens, output_tokens = generate(system_prompt, user_prompt)
-        except ImproperlyConfigured:
-            log.error_message = "DO_MODEL_ACCESS_KEY no configurada."
-            log.save()
-            return JsonResponse(
-                {"error": "API key no configurada en el servidor."},
-                status=503,
-            )
-        except openai.APIError as exc:
-            log.error_message = str(exc)
-            log.save()
-            return JsonResponse(
-                {"error": "Error al comunicarse con la API de IA."},
-                status=502,
-            )
-
-        # 6. Parsear JSON de la respuesta de la IA
-        # Los modelos open source suelen envolver el JSON en bloques ```json ... ```
-        clean_text = raw_text.strip()
-        if clean_text.startswith("```"):
-            # Elimina la primera línea (```json o ```) y el cierre (```)
-            lines = clean_text.splitlines()
-            clean_text = "\n".join(lines[1:])
-            if clean_text.rstrip().endswith("```"):
-                clean_text = clean_text.rstrip()[:-3].rstrip()
-
-        try:
-            data = json.loads(clean_text, strict=False)
-        except (json.JSONDecodeError, ValueError):
-            log.error_message = f"La IA devolvió texto no parseable como JSON: {raw_text[:500]}"
-            log.input_tokens = input_tokens
-            log.output_tokens = output_tokens
-            log.save()
-            return JsonResponse(
-                {"error": "La IA devolvió una respuesta no procesable."},
-                status=502,
-            )
-
-        # 7. Guardar log exitoso
-        log.input_tokens = input_tokens
-        log.output_tokens = output_tokens
-        log.success = True
         log.save()
 
-        # 8. Incrementar contador de sesión
-        request.session[SESSION_KEY] = count + 1
+        # 5. Encolar la llamada a la API de IA como job en background.
+        # full_post puede tardar 30-90s+, más que el timeout del proxy/gateway
+        # (Cloudflare / DigitalOcean App Platform) — por eso no se espera aquí.
+        get_scheduler().add_job(
+            run_generation,
+            trigger="date",
+            run_date=timezone.now(),
+            args=[log.pk, system_prompt, user_prompt],
+            id=f"ai_generation_{log.pk}",
+            replace_existing=True,
+            misfire_grace_time=60,
+        )
 
-        # 9. Respuesta exitosa
+        # 6. Incrementar contador de sesión (el intento consume la cuota)
+        request.session[SESSION_KEY] = count + 1
         generations_remaining = MAX_GENERATIONS_PER_SESSION - (count + 1)
+
         return JsonResponse(
             {
-                "success": True,
-                "data": data,
-                "tokens": {
-                    "input": input_tokens,
-                    "output": output_tokens,
-                },
+                "job_id": log.pk,
                 "generations_remaining": generations_remaining,
+            },
+            status=202,
+        )
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class GenerationStatusView(View):
+    """
+    Endpoint de polling — el frontend consulta el estado de un job de generación
+    encolado por GenerateContentView hasta que termine (done/error).
+    """
+
+    def get(self, request, job_id, *args, **kwargs):
+        try:
+            log = AIGenerationLog.objects.get(pk=job_id)
+        except AIGenerationLog.DoesNotExist as exc:
+            raise Http404("Job de generación no encontrado.") from exc
+
+        if log.status == AIGenerationLog.STATUS_PENDING:
+            return JsonResponse({"status": "pending"})
+
+        if log.status == AIGenerationLog.STATUS_ERROR:
+            return JsonResponse({"status": "error", "error": log.error_message})
+
+        return JsonResponse(
+            {
+                "status": "done",
+                "data": log.result_data,
+                "tokens": {
+                    "input": log.input_tokens,
+                    "output": log.output_tokens,
+                },
             }
         )

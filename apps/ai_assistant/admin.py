@@ -11,12 +11,13 @@ class AIGenerationLogAdmin(ModelAdmin):
         "site_target",
         "user",
         "model_used",
+        "status",
         "input_tokens",
         "output_tokens",
         "success",
         "created_at",
     ]
-    list_filter = ["generation_type", "success", "created_at"]
+    list_filter = ["generation_type", "status", "success", "created_at"]
     readonly_fields = [f.name for f in AIGenerationLog._meta.get_fields()]
 
     def has_add_permission(self, request):

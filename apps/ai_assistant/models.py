@@ -11,6 +11,26 @@ class AIGenerationLog(models.Model):
         ("alt_text", "Texto alternativo"),
     ]
 
+    STATUS_PENDING = "pending"
+    STATUS_DONE = "done"
+    STATUS_ERROR = "error"
+    STATUS_CHOICES = [
+        (STATUS_PENDING, "Pendiente"),
+        (STATUS_DONE, "Completado"),
+        (STATUS_ERROR, "Error"),
+    ]
+
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDING,
+        verbose_name="estado",
+    )
+    result_data = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name="resultado",
+    )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

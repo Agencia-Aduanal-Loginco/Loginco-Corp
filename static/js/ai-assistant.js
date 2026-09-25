@@ -318,6 +318,50 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Polling del job de generación
+  // ---------------------------------------------------------------------------
+
+  const POLL_INTERVAL_MS = 3000;
+  const POLL_MAX_ATTEMPTS = 40; // ~2 minutos
+
+  function pollJobStatus(jobId, attempt, onDone, onError) {
+    fetch("/admin/ai/generate/" + jobId + "/status/")
+      .then(function (response) {
+        return response.json().then(function (data) {
+          return { ok: response.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (!result.ok) {
+          onError(result.data.error || "Error al consultar el estado de la generación.");
+          return;
+        }
+
+        if (result.data.status === "pending") {
+          if (attempt >= POLL_MAX_ATTEMPTS) {
+            onError("La generación está tardando demasiado. Intenta de nuevo más tarde.");
+            return;
+          }
+          setTimeout(function () {
+            pollJobStatus(jobId, attempt + 1, onDone, onError);
+          }, POLL_INTERVAL_MS);
+          return;
+        }
+
+        if (result.data.status === "error") {
+          onError(result.data.error || "Error al generar contenido.");
+          return;
+        }
+
+        onDone(result.data.data, result.data.tokens);
+      })
+      .catch(function (err) {
+        onError("Error de red al consultar el estado de la generación.");
+        console.error("[AI Assistant]", err);
+      });
+  }
+
+  // ---------------------------------------------------------------------------
   // Lógica principal: insertar botón y manejar flujo
   // ---------------------------------------------------------------------------
 
@@ -385,9 +429,8 @@
         const keywords = modal.keywordsInput.value.trim();
         const context = buildContext(generationType, keywords);
 
-        // Mostrar spinner en el botón
-        const originalText = modal.generateBtn.textContent;
-        modal.generateBtn.textContent = "Generando…";
+        // Mostrar spinner en el botón — la generación puede tardar hasta ~1-2 min
+        modal.generateBtn.textContent = "Generando… (puede tardar hasta 2 min)";
         modal.generateBtn.disabled = true;
         modal.cancelBtn.disabled = true;
 
@@ -408,21 +451,32 @@
             });
           })
           .then(function (result) {
-            closeModal();
-
-            if (result.ok && result.data.success) {
-              fillFormFields(generationType, result.data.data);
-              const totalTokens = (result.data.tokens.input || 0) + (result.data.tokens.output || 0);
-              showToast(
-                "✓ Contenido generado — " + totalTokens + " tokens usados",
-                "success"
+            if (result.status === 202 && result.data.job_id) {
+              pollJobStatus(
+                result.data.job_id,
+                0,
+                function onDone(data, tokens) {
+                  closeModal();
+                  fillFormFields(generationType, data);
+                  const totalTokens = (tokens.input || 0) + (tokens.output || 0);
+                  showToast(
+                    "✓ Contenido generado — " + totalTokens + " tokens usados",
+                    "success"
+                  );
+                },
+                function onError(message) {
+                  closeModal();
+                  showToast(message, "error");
+                }
               );
             } else if (result.status === 429) {
+              closeModal();
               showToast(
                 result.data.error || "Límite de generaciones alcanzado.",
                 "warning"
               );
             } else {
+              closeModal();
               showToast(
                 result.data.error || "Error al generar contenido.",
                 "error"
