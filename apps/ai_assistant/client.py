@@ -1,21 +1,22 @@
 """
-Cliente singleton para DigitalOcean AI Platform (Gradient).
-Soporta proveedores Anthropic (Claude) y DO Gradient (Llama).
+Cliente singleton AI.
+Selector de proveedores: Anthropic (via openai bridge) o DO Gradient.
 """
 
 import openai
-from anthropic import Anthropic
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 DO_INFERENCE_URL = "https://inference.do-ai.run/v1/"
+ANTHROPIC_URL = "https://api.anthropic.com/v1/"
+
 MODEL_DO = "openai-gpt-oss-20b"
 MODEL_ANTHROPIC = "claude-3-5-sonnet-20241022"
 MAX_TOKENS = 4096
 
 def generate(system: str, user: str) -> tuple[str, int, int]:
     """
-    Envía solicitud a proveedor configurado y retorna respuesta.
+    Envía solicitud a proveedor configurado usando cliente openai.
     """
     provider = getattr(settings, "AI_PROVIDER", "do_gradient")
 
@@ -24,15 +25,17 @@ def generate(system: str, user: str) -> tuple[str, int, int]:
         if not api_key:
             raise ImproperlyConfigured("ANTHROPIC_API_KEY no configurada.")
 
-        client = Anthropic(api_key=api_key)
-        message = client.messages.create(
+        # Anthropic endpoint via openai client
+        client = openai.OpenAI(base_url=ANTHROPIC_URL, api_key=api_key)
+        completion = client.chat.completions.create(
             model=MODEL_ANTHROPIC,
             max_tokens=MAX_TOKENS,
-            system=system,
-            messages=[{"role": "user", "content": user}]
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
         )
-        # Anthropic SDK token usage requires manual access, ignoring temporarily for bare generation
-        return message.content[0].text, 0, 0
+        return completion.choices[0].message.content, completion.usage.prompt_tokens, completion.usage.completion_tokens
 
     elif provider == "do_gradient":
         api_key = getattr(settings, "DO_MODEL_ACCESS_KEY", "")
