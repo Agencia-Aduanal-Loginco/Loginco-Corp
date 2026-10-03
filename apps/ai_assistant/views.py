@@ -8,7 +8,7 @@ from django.views import View
 
 from apps.core.scheduler import get_scheduler
 
-from .client import MODEL
+from .client import MODEL_DO as MODEL
 from .jobs import run_generation
 from .models import AIGenerationLog
 from .prompts import build_prompt
