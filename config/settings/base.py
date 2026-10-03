@@ -108,8 +108,11 @@ CACHES = {
 APSCHEDULER_DATETIME_FORMAT = "d/m/Y H:i:s"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
-# DigitalOcean AI Platform (Gradient)
+# IA — DigitalOcean AI Platform (Gradient)
 DO_MODEL_ACCESS_KEY = config("DO_MODEL_ACCESS_KEY", default="")
+AI_PROVIDER = config("AI_PROVIDER", default="do_gradient")
+ANTHROPIC_API_KEY = config("ANTHROPIC_API_KEY", default="")
+OPEN_CODE_API_KEY = config("OPEN_CODE_API_KEY", default="")
 
 # django-meta (SEO)
 META_SITE_PROTOCOL = "https"
