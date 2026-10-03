@@ -4,7 +4,6 @@ pillow>=10.4
 django-imagekit>=5.0
 django-apscheduler>=0.6
 openai>=1.50
-anthropic>=0.40
 django-unfold>=0.40
 django-meta>=2.4
 whitenoise>=6.7
