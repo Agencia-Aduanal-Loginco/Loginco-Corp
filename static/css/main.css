@@ -849,6 +849,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .service-card__cover {
   aspect-ratio: 16 / 9;
+  width: 100%;
   overflow: hidden;
   flex-shrink: 0;
   background-color: var(--color-primary-light);
@@ -990,9 +991,14 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-4px);
 }
 
-.post-card__image-wrap {
+.post-card__image-wrap,
+.post-card__placeholder {
   aspect-ratio: 16 / 9;
+  width: 100%;
   overflow: hidden;
+}
+
+.post-card__image-wrap {
   background-color: var(--color-primary-light);
   position: relative;
 }
@@ -1015,7 +1021,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Placeholder sin imagen */
 .post-card__placeholder {
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -1724,7 +1729,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── FOCUS VISIBLE ── */
 :focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -1982,9 +1987,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .about-intro__image {
-  border-radius: var(--radius-xl);
-  overflow: hidden;
   aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   box-shadow: var(--shadow-brand-lg);
 }
 
@@ -2031,8 +2037,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .socio-card__logo {
-  width: 100%;
-  max-width: 140px;
+  width: 140px;
   height: 64px;
   object-fit: contain;
   display: block;
