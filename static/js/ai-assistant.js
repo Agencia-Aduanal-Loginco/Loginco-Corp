@@ -322,7 +322,7 @@
   // ---------------------------------------------------------------------------
 
   const POLL_INTERVAL_MS = 3000;
-  const POLL_MAX_ATTEMPTS = 40; // ~2 minutos
+  const POLL_MAX_ATTEMPTS = 100; // ~5 minutos (full_post con Opus puede tardar >2 min)
 
   function pollJobStatus(jobId, attempt, onDone, onError) {
     fetch("/admin/ai/generate/" + jobId + "/status/")

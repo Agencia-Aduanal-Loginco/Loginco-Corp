@@ -42,6 +42,85 @@ _RESPONSE_FORMAT_INSTRUCTION = (
 )
 
 # ---------------------------------------------------------------------------
+# JSON Schemas por tipo de generación
+# ---------------------------------------------------------------------------
+# Se pasan al proveedor como structured outputs: el modelo queda obligado a
+# devolver JSON válido con exactamente estas claves, lo que elimina los fallos
+# de parseo (bloques ```json, texto introductorio, claves faltantes).
+# Las restricciones de longitud siguen expresadas en el prompt, no aquí: el
+# subconjunto de JSON Schema soportado no incluye maxLength.
+
+_SCHEMAS = {
+    "full_post": {
+        "type": "object",
+        "properties": {
+            "body": {
+                "type": "string",
+                "description": (
+                    "HTML del artículo con H2, H3, H4, párrafos y listas. "
+                    "Sin html, head, body ni h1."
+                ),
+            },
+            "meta_title": {"type": "string", "description": "Título SEO, máximo 60 caracteres."},
+            "meta_description": {
+                "type": "string",
+                "description": "Descripción SEO con CTA, máximo 160 caracteres.",
+            },
+            "excerpt": {"type": "string", "description": "Resumen, máximo 280 caracteres."},
+        },
+        "required": ["body", "meta_title", "meta_description", "excerpt"],
+        "additionalProperties": False,
+    },
+    "meta_only": {
+        "type": "object",
+        "properties": {
+            "meta_title": {"type": "string", "description": "Título SEO, máximo 60 caracteres."},
+            "meta_description": {
+                "type": "string",
+                "description": "Descripción SEO con CTA, máximo 160 caracteres.",
+            },
+        },
+        "required": ["meta_title", "meta_description"],
+        "additionalProperties": False,
+    },
+    "excerpt": {
+        "type": "object",
+        "properties": {
+            "excerpt": {"type": "string", "description": "Resumen, máximo 280 caracteres."},
+        },
+        "required": ["excerpt"],
+        "additionalProperties": False,
+    },
+    "improve": {
+        "type": "object",
+        "properties": {
+            "body": {
+                "type": "string",
+                "description": "HTML mejorado del artículo, misma estructura de etiquetas.",
+            },
+        },
+        "required": ["body"],
+        "additionalProperties": False,
+    },
+    "alt_text": {
+        "type": "object",
+        "properties": {
+            "alt_text": {
+                "type": "string",
+                "description": "Texto alternativo descriptivo, máximo 120 caracteres.",
+            },
+        },
+        "required": ["alt_text"],
+        "additionalProperties": False,
+    },
+}
+
+
+def get_schema(generation_type: str) -> dict | None:
+    """JSON Schema de la respuesta esperada, o None si el tipo no tiene uno."""
+    return _SCHEMAS.get(generation_type)
+
+# ---------------------------------------------------------------------------
 # Builder principal
 # ---------------------------------------------------------------------------
 

@@ -8,14 +8,15 @@ from django.views import View
 
 from apps.core.scheduler import get_scheduler
 
-from .client import MODEL_DO as MODEL
+from .client import active_model
 from .jobs import run_generation
 from .models import AIGenerationLog
 from .prompts import build_prompt
 
 ALLOWED_TYPES = {"full_post", "meta_only", "excerpt", "improve", "alt_text"}
-MAX_GENERATIONS_PER_SESSION = 3
+MAX_GENERATIONS_PER_SESSION = 10
 SESSION_KEY = "ai_generation_count"
+REFUNDED_KEY = "ai_generation_refunded"
 
 
 @method_decorator(staff_member_required, name="dispatch")
@@ -63,7 +64,7 @@ class GenerateContentView(View):
             user=request.user if request.user.is_authenticated else None,
             generation_type=generation_type,
             site_target=site_target,
-            model_used=MODEL,
+            model_used=active_model(),
             status=AIGenerationLog.STATUS_PENDING,
             success=False,  # Se actualiza a True si todo va bien
         )
@@ -86,7 +87,7 @@ class GenerateContentView(View):
             run_generation,
             trigger="date",
             run_date=timezone.now(),
-            args=[log.pk, system_prompt, user_prompt],
+            args=[log.pk, system_prompt, user_prompt, generation_type],
             id=f"ai_generation_{log.pk}",
             replace_existing=True,
             misfire_grace_time=60,
@@ -122,6 +123,13 @@ class GenerationStatusView(View):
             return JsonResponse({"status": "pending"})
 
         if log.status == AIGenerationLog.STATUS_ERROR:
+            # Un intento fallido no debe consumir cuota: el usuario no obtuvo nada.
+            # Se devuelve la cuota una sola vez por job (flag en sesión).
+            refunded = request.session.get(REFUNDED_KEY, [])
+            if log.pk not in refunded:
+                count = request.session.get(SESSION_KEY, 0)
+                request.session[SESSION_KEY] = max(0, count - 1)
+                request.session[REFUNDED_KEY] = refunded + [log.pk]
             return JsonResponse({"status": "error", "error": log.error_message})
 
         return JsonResponse(

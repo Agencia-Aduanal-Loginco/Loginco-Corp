@@ -3,6 +3,7 @@ python-decouple>=3.8
 pillow>=10.4
 django-imagekit>=5.0
 django-apscheduler>=0.6
+anthropic>=0.87,<1.0
 openai>=1.50
 requests>=2.31.0
 django-unfold>=0.40
