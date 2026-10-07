@@ -7,7 +7,6 @@ from django.urls import reverse
 
 
 class PagesSmokeTest(TestCase):
-
     def test_home_returns_200(self):
         response = self.client.get(reverse("pages:home"))
         self.assertEqual(response.status_code, 200)
@@ -17,6 +16,10 @@ class PagesSmokeTest(TestCase):
         response = self.client.get(reverse("pages:about"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "pages/about.html")
+        self.assertContains(response, "img/about-team-480.webp")
+        self.assertContains(response, "img/about-team-800.webp")
+        self.assertContains(response, "img/about-team-800.jpg")
+        self.assertNotContains(response, "images.unsplash.com")
 
     def test_contact_returns_200(self):
         response = self.client.get(reverse("pages:contact"))
@@ -34,7 +37,6 @@ class PagesSmokeTest(TestCase):
 
 
 class ServicesPageTest(TestCase):
-
     def test_services_returns_200(self):
         response = self.client.get(reverse("services:index"))
         self.assertEqual(response.status_code, 200)
@@ -42,7 +44,6 @@ class ServicesPageTest(TestCase):
 
 
 class SitemapTest(TestCase):
-
     def test_sitemap_returns_200(self):
         response = self.client.get("/sitemap.xml")
         self.assertEqual(response.status_code, 200)
