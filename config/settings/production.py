@@ -57,4 +57,8 @@ STORAGES = {
     },
 }
 
+# Cabeceras de caché WhiteNoise (1 año para estáticos con hash inmutable)
+WHITENOISE_MAX_AGE = 31536000
+WHITENOISE_IMMUTABLE_FILE_TEST = lambda *args: True  # noqa: E731
+
 META_SITE_PROTOCOL = "https"
