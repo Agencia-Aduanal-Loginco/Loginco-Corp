@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Category, Post, SiteTarget, Tag
+from .models import Category, Post, SiteTarget
 
 User = get_user_model()
 

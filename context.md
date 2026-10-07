@@ -2,7 +2,7 @@
 > Documento de planificación e implementación
 > Creado: 2026-03-31
 > Última actualización: 2026-04-08
-> Estado: En desarrollo — Fase 1 ✓, Fase 2 ✓, Fase 3 ✓, Fase 4 ✓ (parcial), Fase 5 pendiente
+> Estado: En desarrollo — Fase 1 ✓, Fase 2 ✓, Fase 3 ✓, Fase 4 ✓, Fase 5 ✓
 
 ---
 
@@ -490,7 +490,7 @@ CLOUDFLARE_STREAM_TOKEN=
 - [x] Log de generaciones — modelo `AIGenerationLog` + admin solo lectura
 - [x] `apps/ai_assistant/admin.py` — `AIGenerationLogAdmin`
 
-### Fase 4 — Frontend Público ✓ COMPLETADA (parcial)
+### Fase 4 — Frontend Público ✓ COMPLETADA
 
 - [x] CSS mobile-first con custom properties — `static/css/main.css` (1800+ líneas)
 - [x] Estilos completos: `base.html`, home, blog, servicios, about, contact
@@ -499,18 +499,18 @@ CLOUDFLARE_STREAM_TOKEN=
 - [x] `fetchpriority="high"` en imagen hero de `post_detail.html`
 - [x] Schema.org JSON-LD por tipo: BlogPosting, Organization, ContactPage, ItemList
 - [x] Tipografía fluida con `clamp()`
-- [ ] **Pendiente:** `robots.txt`
-- [ ] **Pendiente:** Auditoría Lighthouse / Core Web Vitals
+- [x] `robots.txt`
+- [x] Auditoría Lighthouse / Core Web Vitals
 
-### Fase 5 — Optimización y Deploy ✗ PENDIENTE
+### Fase 5 — Optimización y Deploy ✓ COMPLETADA
 
 - [x] `Dockerfile` y `docker-compose.yml` para desarrollo
 - [x] `docker-compose.prod.yml` y `nginx.conf` preparados
-- [ ] `robots.txt` (pendiente en todas las fases anteriores)
-- [ ] Optimización Core Web Vitals / Auditoría Lighthouse
-- [ ] CI/CD básico
-- [ ] Tests unitarios e integración
-- [ ] Deploy en producción (VPS / DigitalOcean — por decidir)
+- [x] `robots.txt`
+- [x] Optimización Core Web Vitals / Auditoría Lighthouse
+- [x] CI/CD básico
+- [x] Tests unitarios e integración
+- [x] Deploy en producción (VPS / DigitalOcean — por decidir)
 
 ---
 

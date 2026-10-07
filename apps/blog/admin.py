@@ -1,5 +1,5 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin, TabularInline
+from unfold.admin import ModelAdmin
 
 from .models import Category, Post, SiteTarget, Tag
 from .widgets import TiptapWidget
