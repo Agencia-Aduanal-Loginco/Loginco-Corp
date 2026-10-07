@@ -36,6 +36,35 @@ class PagesSmokeTest(TestCase):
         self.assertIn("Sitemap:", content)
 
 
+class GoneRoutesTest(TestCase):
+    """
+    Verifica que las rutas heredadas devuelvan 410 Gone.
+    """
+    def test_gone_routes_return_410(self):
+        routes = ["/shopping/", "/authentic/", "/shop/", "/header.php", "/https:/"]
+        for route in routes:
+            response = self.client.get(route)
+            self.assertEqual(response.status_code, 410, f"Route {route} should return 410")
+
+
+class PublicRoutesTest(TestCase):
+    """
+    Verifica que las rutas públicas devuelvan 200 OK.
+    """
+    def test_public_routes_return_200(self):
+        routes = [
+            reverse("pages:home"),
+            reverse("pages:about"),
+            reverse("pages:contact"),
+            reverse("services:index"),
+            reverse("blog:post_list"),
+            "/sitemap.xml"
+        ]
+        for route in routes:
+            response = self.client.get(route)
+            self.assertEqual(response.status_code, 200, f"Route {route} should return 200")
+
+
 class ServicesPageTest(TestCase):
     def test_services_returns_200(self):
         response = self.client.get(reverse("services:index"))
